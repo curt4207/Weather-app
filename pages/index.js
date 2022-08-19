@@ -1,12 +1,22 @@
 import Head from "next/head";
+import CurrentWeather from "../components/Current-Weather/current-weather";
 import style from "../styles/Home.module.css";
 
-//Default location
-const defaultEndpoint = `https://api.weather.gov/gridpoints/OKX/32,34/forecast?units=us`;
+async function getPointData(longitude, latitude){
+  const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
+  const data = await res.json();
+
+  return {
+    officeId: data.properties.gridId,
+    gridX: data.properties.gridX,
+    gridY: data.properties.gridY
+  }
+}
 
 //Fetches weather data
 export async function getServerSideProps() {
-  const res = await fetch(defaultEndpoint);
+  const { officeId, gridX, gridY } = await getPointData(39.7456, -97.0892);
+  const res = await fetch(`https://api.weather.gov/gridpoints/${officeId}/${gridX},${gridY}/forecast?units=us`);
   const data = await res.json();
 
   return {
@@ -36,16 +46,8 @@ const Home = ({ data }) => {
       </button>
       <h2 className={style.smallHeading}>{monthNames[month]}</h2>
       <br />
-      <ul className={style.grid}>
-        <li className={style.card} key={data.properties.periods.startTime}>
-          <p className={style.day}>
-            {data.properties.periods[0].startTime[8]}
-            {data.properties.periods[0].startTime[9]}
-          </p>
-          <p>{data.properties.periods[0].temperature}°F</p>
-          <p>{data.properties.periods[0].name}</p>
-        </li>
-      </ul>
+      
+      <CurrentWeather data={data} />
     </div>
   );
 };
