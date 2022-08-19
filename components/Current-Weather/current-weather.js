@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import style from "../../styles/Home.module.css";
 
-const CurrentWeather = ({data}) => {
+const CurrentWeather = ({weatherData}) => {
 const [currentWeather, setCurrentWeather] = useState("");
 
-const properties = data.properties;
+
+const properties = weatherData.properties;
 const periods = properties.periods;
-const firstPeriod = periods[0]
+const firstPeriod = periods[0];
 // i want it to show the current weather for my location, the temp, if its sunny or partly cloudy, and maybe the high and low for the day
 return (
     <ul className={style.grid}>

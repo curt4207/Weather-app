@@ -47,7 +47,7 @@ const Home = ({ data }) => {
       <h2 className={style.smallHeading}>{monthNames[month]}</h2>
       <br />
       
-      <CurrentWeather data={data} />
+      <CurrentWeather weatherData={data} />
     </div>
   );
 };
