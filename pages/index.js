@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import CurrentWeather from "../components/Current-Weather/current-weather";
 import style from "../styles/Home.module.css";
 import GeoApi from "../components/GeoApi";
 
-//Default location
-const defaultEndpoint = `https://api.weather.gov/gridpoints/OKX/32,34/forecast?units=us`;
+async function getPointData(longitude, latitude) {
+  const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
+  const data = await res.json();
+
+  return {
+    officeId: data.properties.gridId,
+    gridX: data.properties.gridX,
+    gridY: data.properties.gridY,
+  };
+}
 
 //Fetches weather data
 export async function getServerSideProps() {
-  const res = await fetch(defaultEndpoint);
+  const { officeId, gridX, gridY } = await getPointData(39.7456, -97.0892);
+  const res = await fetch(`https://api.weather.gov/gridpoints/${officeId}/${gridX},${gridY}/forecast?units=us`);
   const weatherData = await res.json();
 
   return {
@@ -39,12 +49,8 @@ const Home = ({ weatherData }) => {
       </button>
       <h2 className={style.smallHeading}>{monthNames[month]}</h2>
       <br />
-
       <GeoApi weatherForecast={weatherForecast} setWeatherForecast={setWeatherForecast} />
-
-      <ul className={style.grid}>
-        <li>Loading...</li>
-      </ul>
+      <CurrentWeather weatherForecast={weatherForecast} />
     </div>
   );
 };
