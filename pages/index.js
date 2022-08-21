@@ -1,5 +1,7 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import style from "../styles/Home.module.css";
+import GeoApi from "../components/GeoApi";
 
 //Default location
 const defaultEndpoint = `https://api.weather.gov/gridpoints/OKX/32,34/forecast?units=us`;
@@ -7,22 +9,23 @@ const defaultEndpoint = `https://api.weather.gov/gridpoints/OKX/32,34/forecast?u
 //Fetches weather data
 export async function getServerSideProps() {
   const res = await fetch(defaultEndpoint);
-  const data = await res.json();
+  const weatherData = await res.json();
 
   return {
-    props: { data },
+    props: { weatherData },
   };
 }
 
 //data prop contains all the weather forecast info
-const Home = ({ data }) => {
+const Home = ({ weatherData }) => {
+  const [weatherForecast, setWeatherForecast] = useState(weatherData);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
 
   //Just console logs the weather forecast data
   const logWeatherData = () => {
-    console.log(data);
+    console.log(weatherForecast);
   };
 
   return (
@@ -36,15 +39,11 @@ const Home = ({ data }) => {
       </button>
       <h2 className={style.smallHeading}>{monthNames[month]}</h2>
       <br />
+
+      <GeoApi weatherForecast={weatherForecast} setWeatherForecast={setWeatherForecast} />
+
       <ul className={style.grid}>
-        <li className={style.card} key={data.properties.periods.startTime}>
-          <p className={style.day}>
-            {data.properties.periods[0].startTime[8]}
-            {data.properties.periods[0].startTime[9]}
-          </p>
-          <p>{data.properties.periods[0].temperature}°F</p>
-          <p>{data.properties.periods[0].name}</p>
-        </li>
+        <li>Loading...</li>
       </ul>
     </div>
   );

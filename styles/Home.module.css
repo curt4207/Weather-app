@@ -44,6 +44,14 @@
   flex-grow: 1;
 }
 
+.geo {
+  color: #3ab4f2;
+}
+
+.list {
+  color: #0070f3;
+}
+
 .smallHeading {
   font-size: 40px;
   color: #3ab4f2;
@@ -103,7 +111,7 @@
   font-size: 20px;
   padding: 1.5rem;
   text-align: center;
-  color: inherit;
+  color: #eaeaea;
   text-decoration: none;
   border: 3px solid #0078aa;
   border-radius: 10px;
