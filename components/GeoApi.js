@@ -4,7 +4,7 @@ import style from "../styles/Home.module.css";
 
 function GeoApi(props) {
   const { weatherForecast, setWeatherForecast } = props;
-  const [locationName, setLocationName] = useState("");
+  const [locationName, setLocationName] = useState("Linn, Kansas");
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e) => {
@@ -23,17 +23,6 @@ function GeoApi(props) {
     long = firstData.data[a].longitude;
     lat = firstData.data[a].latitude;
     console.log(a, firstData);
-  }
-
-  async function fetchGrid(long, lat) {
-    const res = await fetch(`https://api.weather.gov/points/${lat},${long}`);
-    const data = await res.json();
-    // console.log(data);
-    setGrid({
-      office: data.properties.gridId,
-      gridX: data.properties.gridX,
-      gridY: data.properties.gridY,
-    });
   }
 
   async function fetchWeatherForecast() {
@@ -80,7 +69,6 @@ function GeoApi(props) {
         <button type="submit">Search</button>
       </form>
       <button onClick={fetchCoords}>Coordinates</button>
-      <button onClick={fetchGrid}>Grid</button>
       <button onClick={fetchWeatherForecast}>Weather</button>
       <p>{locationName}</p>
     </div>
