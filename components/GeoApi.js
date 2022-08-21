@@ -69,7 +69,6 @@ function GeoApi(props) {
         <button type="submit">Search</button>
       </form>
       <button onClick={fetchCoords}>Coordinates</button>
-      <button onClick={fetchWeatherForecast}>Weather</button>
       <p>{locationName}</p>
     </div>
   );
