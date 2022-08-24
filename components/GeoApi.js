@@ -28,7 +28,7 @@ function GeoApi(props) {
     return { long, lat };
   }
 
-  //Gets weather data
+  //Gets weather data when Search button clicked
   const handleSubmit = async (e) => {
     e.preventDefault();
 
