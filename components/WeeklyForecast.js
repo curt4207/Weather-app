@@ -11,25 +11,26 @@ function WeeklyForecast({ weeklyWeather }) {
   return (
     <div className={style.grid}>
       {periods.map((item, index) => {
-        if([0,1,3,5,7,9,11,13].indexOf(index) !== -1) {
+        if(item.isDaytime === false) {
           return;
         }
         return (
           <div className={style.card} key={index}>
-            <h3>
-              {item.name}
-            </h3>
-            <Image
-              src={item.icon}
-              alt="icon"
-              width="100"
-              height="100"
-            />
-            <p>
-              <span>{item.temperature}°F</span>
-              {/*<span> | {item.temperature}°F</span> Should be a night temperature.*/}
-            </p>
-          </div>
+          <h3>
+            {item.name}
+          </h3>
+          <Image
+            src={item.icon}
+            alt="icon"
+            width="100"
+            height="100"
+          />
+          <p>
+            <span>{item.temperature}°F</span>
+            <span> | {item.temperature}°F</span>
+            {/*<span> | {item.temperature}°F</span> Should be a night temperature.*/}
+          </p>
+        </div>
         );
       })
       }
