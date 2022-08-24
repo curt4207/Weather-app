@@ -1,5 +1,6 @@
 import Head from "next/head";
 import style from "../styles/Home.module.css";
+import WeeklyForecast from "../components/WeeklyForecast";
 
 //Default location
 const defaultEndpoint = `https://api.weather.gov/gridpoints/OKX/32,34/forecast?units=us`;
@@ -46,6 +47,8 @@ const Home = ({ data }) => {
           <p>{data.properties.periods[0].name}</p>
         </li>
       </ul>
+      <br />
+      <WeeklyForecast weeklyWeather={data} />
     </div>
   );
 };
