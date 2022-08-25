@@ -11,62 +11,61 @@ function GeoApi(props) {
     setSearchTerm(e.target.value);
   };
 
-  //Just keeping this function to help with development, will delete later
   async function fetchCoords() {
     if (API_KEY === null) {
       console.log("Geolocation API key not set.");
     }
     let firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
     let firstData = await firstRes.json();
-    let a = 0;
-    while (firstData.data[a].continent !== "North America") {
-      a++;
+    let searchHitIndex = 0;
+    while (firstData.data[searchHitIndex].country_code !== "USA") {
+      searchHitIndex++;
     }
-    const long = firstData.data[a].longitude;
-    const lat = firstData.data[a].latitude;
-    console.log(a, firstData);
+
+    const long = firstData.data[searchHitIndex].longitude;
+    const lat = firstData.data[searchHitIndex].latitude;
+    setLocationName(firstData.data[searchHitIndex].label);
+
     return { long, lat };
   }
 
-  //Gets weather data when Search button clicked
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    //Step 1 -  Fetches the longitude and latitude
-    let long = 0;
-    let lat = 0;
-    let indexA = 0;
-
-    const firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
-    const firstData = await firstRes.json().then((firstData) => {
-      while (firstData.data[indexA].continent !== "North America") {
-        indexA++;
-      }
-      long = firstData.data[indexA].longitude;
-      lat = firstData.data[indexA].latitude;
-      setLocationName(firstData.data[indexA].label);
-    });
-
-    //Step 2 - Fetches grid data
+  async function fetchGrid(long, lat) {
     const secondRes = await fetch(`https://api.weather.gov/points/${lat},${long}`);
     const secondData = await secondRes.json();
 
     const office = secondData.properties.gridId;
     const gridX = secondData.properties.gridX;
     const gridY = secondData.properties.gridY;
-    console.log(office, gridX, gridY);
 
-    //Step 3 - Fetches current weather data
-    const thirdRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast/hourly?units=us`);
-    const thirdData = await thirdRes.json().then((res) => {
+    return { office, gridX, gridY };
+  }
+
+  async function fetchWeatherData(office, gridX, gridY) {
+    const firstRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast/hourly?units=us`);
+    const firstData = await firstRes.json().then((res) => {
       setWeatherNow(res);
     });
 
-    //Step 4 - Fetches weekly weather forecast
-    const finalRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast?units=us`);
-    const data = finalRes.json().then((res) => {
+    const secondRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast?units=us`);
+    const secondData = secondRes.json().then((res) => {
       setWeatherForecast(res);
     });
+  }
+
+  //Gets weather data when Search button clicked
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const longLat = fetchCoords();
+    const long = (await longLat).long;
+    const lat = (await longLat).lat;
+
+    const gridData = fetchGrid(long, lat);
+    const office = (await gridData).office;
+    const gridX = (await gridData).gridX;
+    const gridY = (await gridData).gridY;
+
+    fetchWeatherData(office, gridX, gridY);
   };
 
   return (
