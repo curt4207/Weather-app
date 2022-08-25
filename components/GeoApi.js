@@ -35,16 +35,16 @@ function GeoApi(props) {
     //Step 1 -  Fetches the longitude and latitude
     let long = 0;
     let lat = 0;
-    let a = 0;
+    let indexA = 0;
 
     const firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
     const firstData = await firstRes.json().then((firstData) => {
-      while (firstData.data[a].continent !== "North America") {
-        a++;
+      while (firstData.data[indexA].continent !== "North America") {
+        indexA++;
       }
-      long = firstData.data[a].longitude;
-      lat = firstData.data[a].latitude;
-      setLocationName(firstData.data[a].label);
+      long = firstData.data[indexA].longitude;
+      lat = firstData.data[indexA].latitude;
+      setLocationName(firstData.data[indexA].label);
     });
 
     //Step 2 - Fetches grid data
