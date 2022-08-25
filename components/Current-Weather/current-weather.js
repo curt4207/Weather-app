@@ -1,7 +1,7 @@
 import style from "../../styles/Home.module.css";
 
-const CurrentWeather = ({ weatherForecast }) => {
-  const properties = weatherForecast.properties;
+const CurrentWeather = ({ weatherNow }) => {
+  const properties = weatherNow.properties;
   const periods = properties.periods;
   const firstPeriod = periods[0];
 

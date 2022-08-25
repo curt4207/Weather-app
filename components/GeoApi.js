@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "../styles/Home.module.css";
 
 function GeoApi(props) {
-  const { weatherForecast, setWeatherForecast } = props;
+  const { setWeatherForecast, setWeatherNow } = props;
   const [locationName, setLocationName] = useState("Linn, Kansas");
   const [searchTerm, setSearchTerm] = useState("");
   const API_KEY = process.env.NEXT_PUBLIC_GEOLOCATION_API_KEY;
@@ -56,7 +56,13 @@ function GeoApi(props) {
     const gridY = secondData.properties.gridY;
     console.log(office, gridX, gridY);
 
-    //Step 3 - Fetches weather forecast data
+    //Step 3 - Fetches current weather data
+    const thirdRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast/hourly?units=us`);
+    const thirdData = await thirdRes.json().then((res) => {
+      setWeatherNow(res);
+    });
+
+    //Step 4 - Fetches weekly weather forecast
     const finalRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast?units=us`);
     const data = finalRes.json().then((res) => {
       setWeatherForecast(res);

@@ -15,27 +15,32 @@ async function getPointData(longitude, latitude) {
   };
 }
 
-//Fetches weather data
+//Fetches weather data of Linn Kansas, used to fill in state variables
 export async function getServerSideProps() {
   const { officeId, gridX, gridY } = await getPointData(39.7456, -97.0892);
   const res = await fetch(`https://api.weather.gov/gridpoints/${officeId}/${gridX},${gridY}/forecast?units=us`);
-  const weatherData = await res.json();
+  const weatherInitialFetchWeekly = await res.json();
+
+  const secondRes = await fetch(`https://api.weather.gov/gridpoints/${officeId}/${gridX},${gridY}/forecast/hourly?units=us`);
+  const weatherInitialFetchNow = await secondRes.json();
 
   return {
-    props: { weatherData },
+    props: { weatherInitialFetchWeekly, weatherInitialFetchNow },
   };
 }
 
-//data prop contains all the weather forecast info
-const Home = ({ weatherData }) => {
-  const [weatherForecast, setWeatherForecast] = useState(weatherData);
+//data props for current weather and weekly weather
+const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
+  const [weatherForecast, setWeatherForecast] = useState(weatherInitialFetchWeekly);
+  const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
 
   //Just console logs the weather forecast data
   const logWeatherData = () => {
-    console.log(weatherForecast);
+    console.log("Forecast", weatherForecast);
+    console.log("Now", weatherNow);
   };
 
   return (
@@ -49,8 +54,8 @@ const Home = ({ weatherData }) => {
       </button>
       <h2 className={style.smallHeading}>{monthNames[month]}</h2>
       <br />
-      <GeoApi weatherForecast={weatherForecast} setWeatherForecast={setWeatherForecast} />
-      <CurrentWeather weatherForecast={weatherForecast} />
+      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
+      <CurrentWeather weatherNow={weatherNow} />
     </div>
   );
 };
