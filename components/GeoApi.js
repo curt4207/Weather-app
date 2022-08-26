@@ -15,8 +15,8 @@ function GeoApi(props) {
     if (API_KEY === null) {
       console.log("Geolocation API key not set.");
     }
-    let firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
-    let firstData = await firstRes.json();
+    const firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
+    const firstData = await firstRes.json();
     let searchHitIndex = 0;
     while (firstData.data[searchHitIndex].country_code !== "USA") {
       searchHitIndex++;
@@ -36,6 +36,7 @@ function GeoApi(props) {
     const office = secondData.properties.gridId;
     const gridX = secondData.properties.gridX;
     const gridY = secondData.properties.gridY;
+    console.log(office, gridX, gridY);
 
     return { office, gridX, gridY };
   }
