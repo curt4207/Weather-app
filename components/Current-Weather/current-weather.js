@@ -3,31 +3,30 @@ import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 
-const CurrentWeather = ({weatherData}) => {
-const properties = weatherData.properties;
-const periods = properties.periods;
-const firstPeriod = periods[0];
+const CurrentWeather = ({ weatherNow }) => {
+  const properties = weatherNow.properties;
+  const periods = properties.periods;
+  const firstPeriod = periods[0];
 
   return (
-    <Card sx={{maxWidth: "fit-content"}}>
+    <Card sx={{ maxWidth: "fit-content" }}>
       <CardContent className={style.card}>
         <Typography className={style.day} key={periods.startTime}>
-        {firstPeriod.name}
-        </Typography >
-          <Typography variant="h1">
+          {firstPeriod.name}
+        </Typography>
+        <Typography variant="h1">
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
-          </Typography>
+        </Typography>
         <Typography variant="h5">
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
         </Typography>
         <Typography variant="h3">
-        <p>{firstPeriod.shortForecast}</p>
+          <p>{firstPeriod.shortForecast}</p>
         </Typography>
-    </CardContent>
+      </CardContent>
     </Card>
   );
-
 };
 
 export default CurrentWeather;
