@@ -1,4 +1,7 @@
 import style from "../../styles/Home.module.css";
+import { Card } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
 
 const CurrentWeather = ({ weatherNow }) => {
   const properties = weatherNow.properties;
@@ -6,18 +9,23 @@ const CurrentWeather = ({ weatherNow }) => {
   const firstPeriod = periods[0];
 
   return (
-    <ul className={style.grid}>
-      <li className={style.card} key={periods.startTime}>
-        <p className={style.day}>
+    <Card sx={{ maxWidth: "fit-content" }}>
+      <CardContent className={style.card}>
+        <Typography className={style.day} key={periods.startTime}>
+          {firstPeriod.name}
+        </Typography>
+        <Typography variant="h1">
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
-        </p>
-        <p>
+        </Typography>
+        <Typography variant="h5">
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
-        </p>
-        <p>{firstPeriod.name}</p>
-      </li>
-    </ul>
+        </Typography>
+        <Typography variant="h3">
+          <p>{firstPeriod.shortForecast}</p>
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 

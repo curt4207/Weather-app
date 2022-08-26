@@ -52,7 +52,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       <button className={style.button} onClick={logWeatherData}>
         Log Data
       </button>
-      <h2 className={style.smallHeading}>{monthNames[month]}</h2>
+      <h2 className={style.monthHeading}>{monthNames[month]}</h2>
       <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       <CurrentWeather weatherNow={weatherNow} />
