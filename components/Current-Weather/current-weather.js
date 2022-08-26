@@ -3,10 +3,8 @@ import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 
-
-
-const CurrentWeather = ({weatherForecast}) => {
-const properties = weatherForecast.properties;
+const CurrentWeather = ({weatherData}) => {
+const properties = weatherData.properties;
 const periods = properties.periods;
 const firstPeriod = periods[0];
 
