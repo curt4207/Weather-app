@@ -2,11 +2,13 @@ import style from "../../styles/Home.module.css";
 import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
+import Image from "next/image"
 
 const CurrentWeather = ({ weatherNow }) => {
   const properties = weatherNow.properties;
   const periods = properties.periods;
   const firstPeriod = periods[0];
+  const iconImage = firstPeriod.icon;
 
   return (
     <Card sx={{ maxWidth: "fit-content" }}>
@@ -18,6 +20,13 @@ const CurrentWeather = ({ weatherNow }) => {
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
         </Typography>
+         <Typography>
+          <picture>
+          <img src={iconImage} alt="weather icon"
+          />
+          </picture>
+            </Typography>
+        
         <Typography variant="h5">
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
         </Typography>
