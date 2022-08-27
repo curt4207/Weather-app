@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import style from "../styles/Home.module.css";
+import { Button } from "../pages";
+import styled from "styled-components";
+
 
 function GeoApi(props) {
   const { setWeatherForecast, setWeatherNow } = props;
@@ -70,15 +72,16 @@ function GeoApi(props) {
   };
 
   return (
-    <div className={style.geo}>
+    <div>
       <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} />
-        <button type="submit">Search</button>
+        <Button type="submit">Search</Button>
       </form>
-      <button onClick={fetchCoords}>Coordinates</button>
+      <button type="submit" onClick={fetchCoords}>Coordinates</button>
       <p>{locationName}</p>
     </div>
   );
 }
 
-export default GeoApi;
+export default styled(GeoApi)`
+`;

@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
-import style from "../styles/Home.module.css";
 import GeoApi from "../components/GeoApi";
+
+export const Button = styled.button`
+    background-color: #f2df3a;
+    border: 3px solid #000;
+    border-radius: 10px;
+    color: #000;
+    font-size: 25px;
+    margin: 5px;
+  
+  :hover {
+    background-color: #000;
+    color: #eaeaea;
+    border: 3px solid #eaeaea;
+    cursor: pointer;
+  }`
+export const H1 = styled.h1`
+  font-size: 3rem`
+export const H2 = styled.h2`
+  font-size: 1.5rem`
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -44,15 +63,15 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
   };
 
   return (
-    <div>
+    <div >
       <Head>
         <title>Weather App</title>
       </Head>
-      <h1 className={style.title}>Weather</h1>
-      <button className={style.button} onClick={logWeatherData}>
+      <H1>Weather</H1>
+      <Button type="submit" onClick={logWeatherData}>
         Log Data
-      </button>
-      <h2 className={style.monthHeading}>{monthNames[month]}</h2>
+      </Button>
+      <H2>{monthNames[month]}</H2>
       <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       <CurrentWeather weatherNow={weatherNow} />
@@ -60,4 +79,5 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
   );
 };
 
-export default Home;
+export default styled(Home)`
+`;
