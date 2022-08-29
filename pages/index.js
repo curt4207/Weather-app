@@ -3,6 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
 import GeoApi from "../components/GeoApi";
+import CardContainer from "../components/CardContainer";
 
 export const Button = styled.button`
     background-color: #f2df3a;
@@ -18,10 +19,13 @@ export const Button = styled.button`
     border: 3px solid #eaeaea;
     cursor: pointer;
   }`
-export const H1 = styled.h1`
-  font-size: 3rem`
-export const H2 = styled.h2`
-  font-size: 1.5rem`
+ const H1 = styled.h1`
+  font-size: 3rem;`
+ const H2 = styled.h2`
+  font-size: 1.5rem;`
+  
+
+
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -74,7 +78,13 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       <H2>{monthNames[month]}</H2>
       <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
-      <CurrentWeather weatherNow={weatherNow} />
+      
+        <CurrentWeather weatherNow={weatherNow} />
+      
+      <CardContainer>
+        {/* replace this CurrentWeather with 7day forecast */}
+      <CurrentWeather weatherNow={weatherNow}/>
+      </CardContainer>
     </div>
   );
 };

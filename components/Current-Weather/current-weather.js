@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import styled from "styled-components";
 // import styled from "@mui/material";
 
+
 const StyledCard = styled(Card)`
     margin: 1rem;
     padding: 0.5rem;
@@ -28,6 +29,9 @@ const StyledCard = styled(Card)`
     cursor: default;
   }
   `
+  const StyledCurrentWeatherDiv = styled.div`
+  top: 5px;
+  `
 // const H1 = styled.h1`
 // font-size: "50rem"`
 
@@ -39,7 +43,7 @@ const CurrentWeather = ({ weatherNow }) => {
 
   
   return (
-
+   
     <StyledCard sx={{ maxWidth: "fit-content" }}>
       <CardContent>
         <Typography key={periods.startTime}>
@@ -63,6 +67,7 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
       </CardContent>
     </StyledCard>
+    
   );
 };
 
