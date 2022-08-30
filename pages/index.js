@@ -5,7 +5,7 @@ import CurrentWeather from "../components/Current-Weather/current-weather";
 import GeoApi from "../components/GeoApi";
 import CardContainer from "../components/CardContainer";
 
-export const Button = styled.button`
+const Button = styled.button`
     background-color: #f2df3a;
     border: 3px solid #000;
     border-radius: 10px;
@@ -19,13 +19,21 @@ export const Button = styled.button`
     border: 3px solid #eaeaea;
     cursor: pointer;
   }`
+
  const H1 = styled.h1`
   font-size: 3rem;`
  const H2 = styled.h2`
   font-size: 1.5rem;`
   
-
-
+  const Wrapper = styled.div`
+  box-sizing: border-box;
+  border: 5px solid;
+  position: fixed;
+  bottom: 5px;
+  border-color: black;
+  background-color: blue;
+max-width: fit-content; 
+  `
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -72,17 +80,17 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
         <title>Weather App</title>
       </Head>
       <H1>Weather</H1>
+      <Wrapper>
       <Button type="submit" onClick={logWeatherData}>
         Log Data
       </Button>
       <H2>{monthNames[month]}</H2>
       <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
-      
+      </Wrapper>
         <CurrentWeather weatherNow={weatherNow} />
-      
       <CardContainer>
-        {/* replace this CurrentWeather with 7day forecast */}
+        {/* replace this CurrentWeather below with 7day forecast */}
       <CurrentWeather weatherNow={weatherNow}/>
       </CardContainer>
     </div>

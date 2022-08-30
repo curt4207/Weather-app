@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "../pages";
 import styled from "styled-components";
 
 
@@ -75,7 +74,7 @@ function GeoApi(props) {
     <div>
       <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} />
-        <Button type="submit">Search</Button>
+        <button type="submit">Search</button>
       </form>
       <button type="submit" onClick={fetchCoords}>Coordinates</button>
       <p>{locationName}</p>

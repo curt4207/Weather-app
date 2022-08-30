@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import styled from "styled-components";
 // import styled from "@mui/material";
+import CardContainer from "../CardContainer";
 
 
 const StyledCard = styled(Card)`
@@ -19,6 +20,8 @@ const StyledCard = styled(Card)`
     list-style: none;
     background: #3ab4f2;
     display: flex;
+    
+    
   
   :hover,
   :focus,
@@ -29,8 +32,9 @@ const StyledCard = styled(Card)`
     cursor: default;
   }
   `
-  const StyledCurrentWeatherDiv = styled.div`
+  const StyledCardContainer = styled(CardContainer)`
   top: 5px;
+  box-sizing: border-box;
   `
 // const H1 = styled.h1`
 // font-size: "50rem"`
@@ -43,8 +47,8 @@ const CurrentWeather = ({ weatherNow }) => {
 
   
   return (
-   
-    <StyledCard sx={{ maxWidth: "fit-content" }}>
+  
+    <StyledCard sx={{ maxWidth: "fit-content"}}> 
       <CardContent>
         <Typography key={periods.startTime}>
           {firstPeriod.name}
@@ -67,7 +71,7 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
       </CardContent>
     </StyledCard>
-    
+      
   );
 };
 
