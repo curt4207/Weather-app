@@ -11,7 +11,7 @@ function WeeklyForecast({ weeklyWeather }) {
   return (
     <div className={style.grid}>
       {periods.map((item, index) => {
-        if(item.isDaytime === false) {
+        if(index == 0 || item.isDaytime === false) {
           return;
         }
         return (
