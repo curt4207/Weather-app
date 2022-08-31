@@ -27,8 +27,6 @@ function WeeklyForecast({ weeklyWeather }) {
           />
           <p>
             <span>{item.temperature}°F</span>
-            <span> | {item.temperature}°F</span>
-            {/*<span> | {item.temperature}°F</span> Should be a night temperature.*/}
           </p>
         </div>
         );
