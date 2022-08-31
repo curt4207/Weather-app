@@ -1,11 +1,31 @@
 import React, { useEffect, useState } from "react";
 import style from "../styles/Home.module.css";
+import fire from "../config/fire-conf";
 
 function GeoApi(props) {
-  const { setWeatherForecast, setWeatherNow } = props;
-  const [locationName, setLocationName] = useState("Linn, Kansas");
+  const { setWeatherForecast, setWeatherNow, userData } = props;
   const [searchTerm, setSearchTerm] = useState("");
+  const [locationName, setLocationName] = useState("Linn, Kansas");
+  const [locationsGrids, setLocationsGrids] = useState([]);
+  const [currentLocationGrid, setCurrentLocationGrid] = useState({ office: "TOP", gridX: 31, gridY: 80 });
   const API_KEY = process.env.NEXT_PUBLIC_GEOLOCATION_API_KEY;
+
+  useEffect(() => {
+    if (userData) {
+      fire
+        .firestore()
+        .collection(userData.additionalUserInfo.profile.id)
+        .get()
+        .then((res) => {
+          res.docs.forEach((item) => {
+            console.log(item.id, item.data());
+            if (locationsGrids.length < item.length) {
+              setLocationsGrids((array) => [...array, { id: item.id, grid: item.data() }]);
+            }
+          });
+        });
+    }
+  });
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -42,6 +62,8 @@ function GeoApi(props) {
   }
 
   async function fetchWeatherData(office, gridX, gridY) {
+    setCurrentLocationGrid({ office: office, gridX: gridX, gridY: gridY });
+
     const firstRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast/hourly?units=us`);
     const firstData = await firstRes.json().then((res) => {
       setWeatherNow(res);
@@ -69,6 +91,20 @@ function GeoApi(props) {
     fetchWeatherData(office, gridX, gridY);
   };
 
+  const saveLocation = () => {
+    //userData.additionalUserInfo.profile.id
+    if (userData) {
+      console.log(currentLocationGrid);
+      fire.firestore().collection(userData.additionalUserInfo.profile.id).doc(locationName).set(currentLocationGrid);
+    } else {
+      alert("User must be signed in to save location");
+    }
+  };
+
+  const listSavedLocations = () => {
+    console.log(locationsGrids);
+  };
+
   return (
     <div className={style.geo}>
       <form onSubmit={handleSubmit}>
@@ -77,6 +113,9 @@ function GeoApi(props) {
       </form>
       <button onClick={fetchCoords}>Coordinates</button>
       <p>{locationName}</p>
+      <button onClick={saveLocation}>Save Location</button>
+      <button onClick={listSavedLocations}>List Saved Locations</button>
+      <br />
     </div>
   );
 }
