@@ -1,4 +1,3 @@
-
 import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
@@ -6,23 +5,20 @@ import styled from "styled-components";
 // import styled from "@mui/material";
 import CardContainer from "../CardContainer";
 
-
 const StyledCard = styled(Card)`
-    margin: 1rem;
-    padding: 0.5rem;
-    text-align: center;
-    color: #f8f0f0;
-    text-decoration: none;
-    border: 3px solid #0078aa;
-    border-radius: 2rem;
-    transition: color 0.15s ease, border-color 0.15s ease;
-    max-width: fit-content;
-    list-style: none;
-    background: #3ab4f2;
-    display: flex;
-    
-    
-  
+  margin: 1rem;
+  padding: 0.5rem;
+  text-align: center;
+  color: #f8f0f0;
+  text-decoration: none;
+  border: 3px solid #0078aa;
+  border-radius: 2rem;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  max-width: fit-content;
+  list-style: none;
+  background: #3ab4f2;
+  display: flex;
+
   :hover,
   :focus,
   :active {
@@ -31,11 +27,11 @@ const StyledCard = styled(Card)`
     background-color: #f6f6f6;
     cursor: default;
   }
-  `
-  const StyledCardContainer = styled(CardContainer)`
+`;
+const StyledCardContainer = styled(CardContainer)`
   top: 5px;
   box-sizing: border-box;
-  `
+`;
 // const H1 = styled.h1`
 // font-size: "50rem"`
 
@@ -45,22 +41,20 @@ const CurrentWeather = ({ weatherNow }) => {
   const firstPeriod = periods[0];
   const iconImage = firstPeriod.icon;
 
-  
   return (
-  
-    <StyledCard sx={{ maxWidth: "fit-content"}}> 
+    <StyledCard sx={{ maxWidth: "fit-content" }}>
       <CardContent>
-        <Typography key={periods.startTime}>
+        {/* I think we don't need this since firstPeriod.name is an empty string */}
+        {/* <Typography key={periods.startTime}>
           {firstPeriod.name}
-        </Typography>
+        </Typography> */}
         <Typography variant="h3">
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
         </Typography>
         <Typography>
           <picture>
-          <img src={iconImage} height="60rem" width="60rem" alt="weather icon"
-          />
+            <img src={iconImage} height="60rem" width="60rem" alt="weather icon" />
           </picture>
         </Typography>
         <Typography variant="h5">
@@ -71,9 +65,7 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
       </CardContent>
     </StyledCard>
-      
   );
 };
 
-export default styled(CurrentWeather)`
-`;
+export default styled(CurrentWeather)``;
