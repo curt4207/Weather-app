@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import CurrentWeather from "../components/Current-Weather/current-weather";
 import style from "../styles/Home.module.css";
+import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
 
 async function getPointData(longitude, latitude) {
@@ -56,6 +57,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       <CurrentWeather weatherNow={weatherNow} />
+      <WeeklyForecast weeklyWeather={weatherForecast} />
     </div>
   );
 };
