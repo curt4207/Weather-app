@@ -6,8 +6,6 @@ function WeeklyForecast({ weeklyWeather }) {
   const properties = weeklyWeather.properties;
   const periods = properties.periods;
 
-  console.log(periods)
-
   return (
     <div className={style.grid}>
       {periods.map((item, index) => {
