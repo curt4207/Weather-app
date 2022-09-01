@@ -1,17 +1,17 @@
 import { createGlobalStyle } from "styled-components";
 
 export const lightTheme = {
-    body: "#6AAED9",
-    text: "#363537",
-    toggleBorder: "#fff",
-    background: "#363537"
+  body: "#6AAED9",
+  text: "#363537",
+  toggleBorder: "#fff",
+  background: "#363537",
 };
 
 export const darkTheme = {
-    body: "#262473",
-    text: "#fafafa",
-    toggleBorder: "#6b8096",
-    background: "#999",
+  body: "#363537",
+  text: "#fafafa",
+  toggleBorder: "#6b8096",
+  background: "#999",
 };
 
 export const GlobalStyles = createGlobalStyle`
@@ -22,4 +22,4 @@ body {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
     font-size: 16px;
 }
-`
+`;

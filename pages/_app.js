@@ -10,6 +10,7 @@ const ThemeButton = styled.button`
   margin: 1em;
   padding: 0.25em;
   border: 2px solid;
+  cursor: pointer;
 `;
 
 function MyApp({ Component, pageProps }) {
