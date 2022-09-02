@@ -3,29 +3,35 @@ import style from "../styles/Home.module.css";
 import fire from "../config/fire-conf";
 
 function GeoApi(props) {
-  const { setWeatherForecast, setWeatherNow, userData } = props;
+  const { setWeatherForecast, setWeatherNow, userData, signInStatus } = props;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [locationName, setLocationName] = useState("Linn, Kansas");
-  const [locationsGrids, setLocationsGrids] = useState([]);
+  const [locationsGrids, setLocationsGrids] = useState([{ id: "Linn, Kansas", office: "TOP", gridX: 31, gridY: 80 }]);
   const [currentLocationGrid, setCurrentLocationGrid] = useState({ office: "TOP", gridX: 31, gridY: 80 });
   const API_KEY = process.env.NEXT_PUBLIC_GEOLOCATION_API_KEY;
 
-  useEffect(() => {
-    if (userData) {
-      fire
-        .firestore()
-        .collection(userData.additionalUserInfo.profile.id)
-        .get()
-        .then((res) => {
-          res.docs.forEach((item) => {
-            console.log(item.id, item.data());
-            if (locationsGrids.length < item.length) {
-              setLocationsGrids((array) => [...array, { id: item.id, grid: item.data() }]);
-            }
-          });
+  const fetchSavedLocations = () => {
+    setLocationsGrids([]);
+    fire
+      .firestore()
+      .collection(userData.additionalUserInfo.profile.id)
+      .get()
+      .then((res) => {
+        setLocationsGrids([]);
+        res.docs.forEach((item) => {
+          if (!locationsGrids.includes(item)) {
+            setLocationsGrids((array) => [...array, { id: item.id, grid: item.data() }]);
+          }
         });
+      });
+  };
+
+  useEffect(() => {
+    if (signInStatus) {
+      fetchSavedLocations();
     }
-  });
+  }, [signInStatus]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -56,7 +62,6 @@ function GeoApi(props) {
     const office = secondData.properties.gridId;
     const gridX = secondData.properties.gridX;
     const gridY = secondData.properties.gridY;
-    console.log(office, gridX, gridY);
 
     return { office, gridX, gridY };
   }
@@ -75,10 +80,27 @@ function GeoApi(props) {
     });
   }
 
+  async function fetchSavedLocation(office, gridX, gridY, location) {
+    setCurrentLocationGrid({ office: office, gridX: gridX, gridY: gridY });
+    setLocationName(location);
+
+    const firstRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast/hourly?units=us`);
+    const firstData = await firstRes.json().then((res) => {
+      setWeatherNow(res);
+    });
+
+    const secondRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast?units=us`);
+    const secondData = secondRes.json().then((res) => {
+      setWeatherForecast(res);
+    });
+  }
+
   //Gets weather data when Search button clicked
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (searchTerm.trim() === "") {
+      return;
+    }
     const longLat = fetchCoords();
     const long = (await longLat).long;
     const lat = (await longLat).lat;
@@ -94,15 +116,18 @@ function GeoApi(props) {
   const saveLocation = () => {
     //userData.additionalUserInfo.profile.id
     if (userData) {
-      console.log(currentLocationGrid);
       fire.firestore().collection(userData.additionalUserInfo.profile.id).doc(locationName).set(currentLocationGrid);
+      fetchSavedLocations();
     } else {
       alert("User must be signed in to save location");
     }
   };
 
-  const listSavedLocations = () => {
-    console.log(locationsGrids);
+  const removeLocation = (location) => {
+    fire.firestore().collection(userData.additionalUserInfo.profile.id).doc(location).delete();
+    const newList = locationsGrids.filter((item) => item.id !== location);
+    setLocationsGrids(newList);
+    console.log(newList);
   };
 
   return (
@@ -111,11 +136,20 @@ function GeoApi(props) {
         <input type="text" onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
-      <button onClick={fetchCoords}>Coordinates</button>
       <p>{locationName}</p>
       <button onClick={saveLocation}>Save Location</button>
-      <button onClick={listSavedLocations}>List Saved Locations</button>
       <br />
+      <ul>
+        {signInStatus &&
+          locationsGrids.map((item) => {
+            return (
+              <li key={item.id}>
+                <button onClick={() => fetchSavedLocation(item.grid.office, item.grid.gridX, item.grid.gridY, item.id)}>{item.id}</button>
+                <button onClick={() => removeLocation(item.id)}>X</button>
+              </li>
+            );
+          })}
+      </ul>
     </div>
   );
 }

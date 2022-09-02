@@ -6,7 +6,7 @@ function UserProfile(props) {
   if (signInStatus) {
     return (
       <div>
-        <p>Hello, {userData.additionalUserInfo.profile.name}</p>
+        <p>{userData.additionalUserInfo.profile.name}</p>
       </div>
     );
   } else {

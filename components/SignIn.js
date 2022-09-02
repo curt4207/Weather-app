@@ -12,7 +12,7 @@ function SignIn(props) {
       .then((res) => {
         setSignInStatus(true);
         setUserData(res);
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);

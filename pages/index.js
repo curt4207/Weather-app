@@ -52,15 +52,15 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
         <title>Weather App</title>
       </Head>
       <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
+      <UserProfile userData={userData} signInStatus={signInStatus} />
       <h1 className={style.title}>Weather</h1>
       <button className={style.button} onClick={logWeatherData}>
         Log Data
       </button>
       <h2 className={style.monthHeading}>{monthNames[month]}</h2>
       <br />
-      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} />
+      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
       <CurrentWeather weatherNow={weatherNow} />
-      <UserProfile userData={userData} signInStatus={signInStatus} />
     </div>
   );
 };
