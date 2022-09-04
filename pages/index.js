@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
+import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
 import CardContainer from "../components/CardContainer";
 
@@ -97,14 +98,13 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       </Button>
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       </Wrapper>
-
       <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
       </CurrentWeatherWrapper>
 
       <CardContainer>
         {/* replace this CurrentWeather below with 7day forecast */}
-     
+        <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
     </div>
   );
