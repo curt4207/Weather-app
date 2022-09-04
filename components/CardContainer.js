@@ -6,7 +6,8 @@ const StyledCardContainer = styled(Container)`
     /* display: flex; */
     position: fixed;
     left: 20rem;
-    bottom: 5rem;`
+    bottom: 5rem;
+    `;
 
  const CardContainer = ({children}) => {
     return (

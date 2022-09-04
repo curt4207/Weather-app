@@ -20,8 +20,6 @@ const StyledCard = styled(Card)`
     list-style: none;
     background: #3ab4f2;
     display: flex;
-    
-    
   
   :hover,
   :focus,
@@ -31,13 +29,8 @@ const StyledCard = styled(Card)`
     background-color: #f6f6f6;
     cursor: default;
   }
-  `
-  const StyledCardContainer = styled(CardContainer)`
-  top: 5px;
-  box-sizing: border-box;
-  `
-// const H1 = styled.h1`
-// font-size: "50rem"`
+  `;
+ 
 
 const CurrentWeather = ({ weatherNow }) => {
   const properties = weatherNow.properties;

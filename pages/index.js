@@ -18,12 +18,14 @@ const Button = styled.button`
     color: #eaeaea;
     border: 3px solid #eaeaea;
     cursor: pointer;
-  }`
+  }
+  `;
 
  const H1 = styled.h1`
   font-size: 3rem;`
  const H2 = styled.h2`
-  font-size: 1.5rem;`
+  font-size: 1.5rem;
+  `;
   
   const Wrapper = styled.div`
   box-sizing: border-box;
@@ -33,7 +35,13 @@ const Button = styled.button`
   border-color: black;
   background-color: blue;
 max-width: fit-content; 
-  `
+  `;
+
+  const CurrentWeatherWrapper = styled.div`
+    position: absolute;
+    top: 3rem;
+    left: 40rem;
+    `;
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -88,7 +96,9 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       </Wrapper>
+      <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
+      </CurrentWeatherWrapper>
       <CardContainer>
         {/* replace this CurrentWeather below with 7day forecast */}
       <CurrentWeather weatherNow={weatherNow}/>
