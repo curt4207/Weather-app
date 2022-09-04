@@ -22,7 +22,8 @@ const Button = styled.button`
   `;
 
  const H1 = styled.h1`
-  font-size: 3rem;`
+  font-size: 3rem;
+  `;
  const H2 = styled.h2`
   font-size: 1.5rem;
   `;
@@ -42,6 +43,7 @@ max-width: fit-content;
     top: 3rem;
     left: 40rem;
     `;
+
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -83,25 +85,26 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
   };
 
   return (
-    <div >
+    <div>
       <Head>
         <title>Weather App</title>
       </Head>
       <H1>Weather</H1>
+      <H2>{monthNames[month]}</H2>
       <Wrapper>
       <Button type="submit" onClick={logWeatherData}>
         Log Data
       </Button>
-      <H2>{monthNames[month]}</H2>
-      <br />
       <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       </Wrapper>
+
       <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
       </CurrentWeatherWrapper>
+
       <CardContainer>
         {/* replace this CurrentWeather below with 7day forecast */}
-      <CurrentWeather weatherNow={weatherNow}/>
+     
       </CardContainer>
     </div>
   );

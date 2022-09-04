@@ -34,6 +34,18 @@ const StyledCard = styled(Card)`
 
 const CurrentWeather = ({ weatherNow }) => {
   const properties = weatherNow.properties;
+  if (!properties) {
+    return (
+      <h1>
+        {weatherNow.title}
+        <br/>
+        {weatherNow.detail}
+        <br/>
+        {weatherNow.status}
+      </h1>
+    );
+  }
+
   const periods = properties.periods;
   const firstPeriod = periods[0];
   const iconImage = firstPeriod.icon;

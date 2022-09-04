@@ -15,15 +15,16 @@ function MyApp({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
   
   const toggleTheme = () => {
+
   theme == "light" ? setTheme("dark") : setTheme("light")
 };
 
   return(
-  <ThemeProvider theme={theme == "light" ? lightTheme : darkTheme}>
-    <GlobalStyles />
-    <ThemeButton type= "submit" onClick={toggleTheme}> Switch theme</ThemeButton>
-  <Component {...pageProps} />
-  </ThemeProvider>
+    <ThemeProvider theme={theme == "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <ThemeButton type= "submit" onClick={toggleTheme}> Switch theme</ThemeButton>
+      <Component {...pageProps} />
+    </ThemeProvider>
   )
 };
 
