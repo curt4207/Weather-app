@@ -5,6 +5,8 @@ import CurrentWeather from "../components/Current-Weather/current-weather";
 import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
 import CardContainer from "../components/CardContainer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Button = styled.button`
     background-color: #f2df3a;
@@ -22,14 +24,8 @@ const Button = styled.button`
   }
   `;
 
- const H1 = styled.h1`
-  font-size: 3rem;
-  `;
- const H2 = styled.h2`
-  font-size: 1.5rem;
-  `;
   
-  const Wrapper = styled.div`
+  const FooterWrapper = styled(Footer)`
   box-sizing: border-box;
   border: 5px solid;
   position: fixed;
@@ -40,9 +36,9 @@ max-width: fit-content;
   `;
 
   const CurrentWeatherWrapper = styled.div`
-    position: absolute;
+    position: relative;
     top: 3rem;
-    left: 40rem;
+   left: 35rem; 
     `;
 
 
@@ -90,14 +86,11 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       <Head>
         <title>Weather App</title>
       </Head>
-      <H1>Weather</H1>
-      <H2>{monthNames[month]}</H2>
-      <Wrapper>
-      <Button type="submit" onClick={logWeatherData}>
-        Log Data
-      </Button>
-      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
-      </Wrapper>
+      <Header>
+      <h1>Weather</h1>
+      {monthNames[month]}
+      </Header>
+  
       <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
       </CurrentWeatherWrapper>
@@ -105,7 +98,14 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       <CardContainer>
         {/* replace this CurrentWeather below with 7day forecast */}
         <WeeklyForecast weeklyWeather={weatherForecast} />
-      </CardContainer>
+        </CardContainer>
+        <FooterWrapper>
+      <Button type="submit" onClick={logWeatherData}>
+        Log Data
+      </Button>
+      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
+      </FooterWrapper>
+     
     </div>
   );
 };
