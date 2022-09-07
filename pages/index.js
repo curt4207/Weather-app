@@ -7,6 +7,8 @@ import GeoApi from "../components/GeoApi";
 import CardContainer from "../components/CardContainer";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { toggleTheme } from "./_app";
+
 
 const Button = styled.button`
     background-color: #f2df3a;
@@ -24,7 +26,6 @@ const Button = styled.button`
   }
   `;
 
-  
   const FooterWrapper = styled(Footer)`
   box-sizing: border-box;
   border: 5px solid;
@@ -32,15 +33,23 @@ const Button = styled.button`
   bottom: 5px;
   border-color: black;
   background-color: blue;
-max-width: fit-content; 
+  max-width: fit-content; 
   `;
 
   const CurrentWeatherWrapper = styled.div`
     position: relative;
-    top: 3rem;
-   left: 35rem; 
+    top: 3px;
+    left: 35rem; 
     `;
 
+const ThemeButton = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em;
+  border: 2px solid;
+  background-color: darkblue;
+  color: antiquewhite;
+  `;
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -68,7 +77,7 @@ export async function getServerSideProps() {
 }
 
 //data props for current weather and weekly weather
-const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
+const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, theme }) => {
   const [weatherForecast, setWeatherForecast] = useState(weatherInitialFetchWeekly);
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   //Gets month name instead of number
@@ -81,6 +90,10 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
     console.log("Now", weatherNow);
   };
 
+  const toggleTheme = () => {
+    theme == "light" ? setTheme("dark") : setTheme("light")
+  };
+
   return (
     <div>
       <Head>
@@ -88,22 +101,21 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
       </Head>
       <Header>
       <h1>Weather</h1>
+      <ThemeButton type= "submit" onClick={toggleTheme}> Switch Theme</ThemeButton>
       {monthNames[month]}
       </Header>
   
       <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
       </CurrentWeatherWrapper>
-
       <CardContainer>
-        {/* replace this CurrentWeather below with 7day forecast */}
         <WeeklyForecast weeklyWeather={weatherForecast} />
-        </CardContainer>
-        <FooterWrapper>
-      <Button type="submit" onClick={logWeatherData}>
-        Log Data
-      </Button>
-      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
+      </CardContainer>
+      <FooterWrapper>
+        <Button type="submit" onClick={logWeatherData}>
+          Log Data
+        </Button>
+        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} />
       </FooterWrapper>
      
     </div>
