@@ -1,9 +1,56 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
-import style from "../styles/Home.module.css";
 import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
+
+import CardContainer from "../components/CardContainer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { toggleTheme } from "./_app";
+
+const Button = styled.button`
+  background-color: #f2df3a;
+  border: 3px solid #000;
+  border-radius: 10px;
+  color: #000;
+  font-size: 25px;
+  margin: 5px;
+
+  :hover {
+    background-color: #000;
+    color: #eaeaea;
+    border: 3px solid #eaeaea;
+    cursor: pointer;
+  }
+`;
+
+const FooterWrapper = styled(Footer)`
+  box-sizing: border-box;
+  border: 5px solid;
+  position: fixed;
+  bottom: 5px;
+  border-color: black;
+  background-color: blue;
+  max-width: fit-content;
+`;
+
+const CurrentWeatherWrapper = styled.div`
+  position: relative;
+  top: 3px;
+  left: 35rem;
+`;
+
+const ThemeButton = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em;
+  border: 2px solid;
+  background-color: darkblue;
+  color: antiquewhite;
+`;
+
 import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
 
@@ -32,7 +79,7 @@ export async function getServerSideProps() {
 }
 
 //data props for current weather and weekly weather
-const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
+const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, theme }) => {
   const [weatherForecast, setWeatherForecast] = useState(weatherInitialFetchWeekly);
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   const [signInStatus, setSignInStatus] = useState(false);
@@ -47,24 +94,41 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow }) => {
     console.log("Now", weatherNow);
   };
 
+  const toggleTheme = () => {
+    theme == "light" ? setTheme("dark") : setTheme("light");
+  };
+
   return (
     <div>
       <Head>
         <title>Weather App</title>
       </Head>
-      <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
-      <UserProfile userData={userData} signInStatus={signInStatus} />
-      <h1 className={style.title}>Weather</h1>
-      <button className={style.button} onClick={logWeatherData}>
-        Log Data
-      </button>
-      <h2 className={style.monthHeading}>{monthNames[month]}</h2>
-      <br />
-      <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
-      <CurrentWeather weatherNow={weatherNow} />
-      <WeeklyForecast weeklyWeather={weatherForecast} />
+
+      <Header>
+        <h1>Weather</h1>
+        <ThemeButton type="submit" onClick={toggleTheme}>
+          {" "}
+          Switch Theme
+        </ThemeButton>
+        {monthNames[month]}
+        <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
+        <UserProfile userData={userData} signInStatus={signInStatus} />
+      </Header>
+
+      <CurrentWeatherWrapper>
+        <CurrentWeather weatherNow={weatherNow} />
+      </CurrentWeatherWrapper>
+      <CardContainer>
+        <WeeklyForecast weeklyWeather={weatherForecast} />
+      </CardContainer>
+      <FooterWrapper>
+        <Button type="submit" onClick={logWeatherData}>
+          Log Data
+        </Button>
+        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
+      </FooterWrapper>
     </div>
   );
 };
 
-export default Home;
+export default styled(Home)``;

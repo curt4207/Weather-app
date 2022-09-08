@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "../styles/Home.module.css";
+import styled from "styled-components";
 import fire from "../config/fire-conf";
 
 function GeoApi(props) {
@@ -131,7 +131,7 @@ function GeoApi(props) {
   };
 
   return (
-    <div className={style.geo}>
+    <div>
       <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} />
         <button type="submit">Search</button>
@@ -154,4 +154,4 @@ function GeoApi(props) {
   );
 }
 
-export default GeoApi;
+export default styled(GeoApi)``;

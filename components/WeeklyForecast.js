@@ -1,32 +1,42 @@
 import React from 'react'
-import style from "../styles/Home.module.css";
+// import style from "../styles/Home.module.css";
 import Image from 'next/image'
+import { Card , CardContent, Typography} from '@mui/material';
+import styled from 'styled-components';
+
 
 function WeeklyForecast({ weeklyWeather }) {
   const properties = weeklyWeather.properties;
   const periods = properties.periods;
+  const firstPeriod = periods[0];
 
   return (
-    <div className={style.grid}>
+    <div>
+
       {periods.map((item, index) => {
         if(index == 0 || item.isDaytime === false) {
           return;
         }
         return (
-          <div className={style.card} key={index}>
-          <h3>
+          <div key={index}>
+          <Card sx={{maxWidth: "fit-content"}} >
+            <CardContent>
+          <Typography fontSize={15}>
             {item.name}
-          </h3>
+            </Typography>
           <Image
             src={item.icon}
             alt="icon"
-            width="100"
-            height="100"
+            width="60rem"
+            height="60rem"
           />
-          <p>
-            <span>{item.temperature}°F</span>
-          </p>
+          <Typography>
+            {item.temperature}{firstPeriod.temperatureUnit}
+          </Typography>
+          </CardContent>
+          </Card>
         </div>
+        
         );
       })
       }
