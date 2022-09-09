@@ -37,9 +37,10 @@ const FooterWrapper = styled(Footer)`
 `;
 
 const CurrentWeatherWrapper = styled.div`
-  position: relative;
-  top: 3px;
-  left: 35rem;
+  //position: relative;
+  // top: 3px;
+  // left: 35rem;
+  width: fit-content;
 `;
 
 const ThemeButton = styled.button`
@@ -53,6 +54,7 @@ const ThemeButton = styled.button`
 
 import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
+import PastWeather from "../components/PastWeather";
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -121,6 +123,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
+      <PastWeather />
       <FooterWrapper>
         <Button type="submit" onClick={logWeatherData}>
           Log Data
