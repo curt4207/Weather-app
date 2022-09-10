@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { Card , CardContent, Typography} from '@mui/material';
 import styled from 'styled-components';
 
+const StyledDiv = styled.div`
+`;
 
 function WeeklyForecast({ weeklyWeather }) {
   const properties = weeklyWeather.properties;
@@ -20,7 +22,7 @@ function WeeklyForecast({ weeklyWeather }) {
         return (
           <div key={index}>
           <Card sx={{maxWidth: "fit-content"}} >
-            <CardContent>
+            <CardContent >
           <Typography fontSize={15}>
             {item.name}
             </Typography>
@@ -30,7 +32,7 @@ function WeeklyForecast({ weeklyWeather }) {
             width="60rem"
             height="60rem"
           />
-          <Typography>
+          <Typography >
             {item.temperature}{firstPeriod.temperatureUnit}
           </Typography>
           </CardContent>

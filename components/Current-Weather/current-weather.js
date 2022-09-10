@@ -8,7 +8,7 @@ import CardContainer from "../CardContainer";
 
 
 const StyledCard = styled(Card)`
-    margin: 1rem;
+    margin: 10px;
     padding: 0.5rem;
     text-align: center;
     color: #f8f0f0;
@@ -16,10 +16,12 @@ const StyledCard = styled(Card)`
     border: 3px solid #0078aa;
     border-radius: 2rem;
     transition: color 0.15s ease, border-color 0.15s ease;
-    max-width: fit-content;
-    list-style: none;
+    /* max-width: fit-content; */
+    /* list-style: none; */
     background: #3ab4f2;
     display: flex;
+    position: relative;
+    left: 35rem;
   
   :hover,
   :focus,
@@ -30,7 +32,8 @@ const StyledCard = styled(Card)`
     cursor: default;
   }
   `;
- 
+
+  
 
 const CurrentWeather = ({ weatherNow }) => {
   const properties = weatherNow.properties;
@@ -53,7 +56,7 @@ const CurrentWeather = ({ weatherNow }) => {
   
   return (
   
-    <StyledCard sx={{ maxWidth: "fit-content"}}> 
+    <StyledCard sx={{ minWidth: 345, maxWidth: "fit-content"}}> 
       <CardContent>
         <Typography key={periods.startTime}>
           {firstPeriod.name}
@@ -64,7 +67,7 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
         <Typography>
           <picture>
-          <img src={iconImage} height="60rem" width="60rem" alt="weather icon"
+          <img src={iconImage} height="80rem" width="80rem" alt="weather icon"
           />
           </picture>
         </Typography>

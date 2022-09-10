@@ -33,7 +33,7 @@ function SignIn(props) {
   };
 
   if (signInStatus === false) {
-    return <button onClick={signIn}>Sign In with Google</button>;
+    return <button onClick={signIn}>Sign In With Google</button>;
   } else {
     return <button onClick={signOut}>Sign Out</button>;
   }

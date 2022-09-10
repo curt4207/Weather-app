@@ -26,30 +26,26 @@ const Button = styled.button`
   }
 `;
 
-const FooterWrapper = styled(Footer)`
-  box-sizing: border-box;
-  border: 5px solid;
-  position: fixed;
-  bottom: 5px;
-  border-color: black;
-  background-color: blue;
-  max-width: fit-content;
-`;
-
-const CurrentWeatherWrapper = styled.div`
-  position: relative;
-  top: 3px;
-  left: 35rem;
-`;
 
 const ThemeButton = styled.button`
   font-size: 1em;
-  margin: 1em;
+  margin: 0.5em;
   padding: 0.25em;
   border: 2px solid;
   background-color: darkblue;
   color: antiquewhite;
 `;
+
+const StyledH1 = styled.h1`
+  font-size: 1rem;
+  position: relative;
+  left: 35rem;
+  `;
+const StyledMonth = styled.div`
+  font-size: 3rem;
+  position: relative;
+  left: 35rem;
+  `;
 
 import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
@@ -103,30 +99,34 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       <Head>
         <title>Weather App</title>
       </Head>
-
       <Header>
-        <h1>Weather</h1>
+        <StyledH1>Rock Sparrow Weather App</StyledH1>
         <ThemeButton type="submit" onClick={toggleTheme}>
           {" "}
           Switch Theme
         </ThemeButton>
+        </Header>
+        <StyledMonth>
         {monthNames[month]}
+        </StyledMonth>
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
-        <UserProfile userData={userData} signInStatus={signInStatus} />
-      </Header>
 
-      <CurrentWeatherWrapper>
+        <UserProfile userData={userData} signInStatus={signInStatus} />
+
+        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
+
+      
         <CurrentWeather weatherNow={weatherNow} />
-      </CurrentWeatherWrapper>
+     
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
-      <FooterWrapper>
+      <Footer>
         <Button type="submit" onClick={logWeatherData}>
           Log Data
         </Button>
-        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
-      </FooterWrapper>
+        
+      </Footer>
     </div>
   );
 };

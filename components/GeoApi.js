@@ -136,10 +136,9 @@ function GeoApi(props) {
         <input type="text" onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
-      <p>{locationName}</p>
+      {locationName}
       <button onClick={saveLocation}>Save Location</button>
-      <br />
-      <ul>
+      
         {signInStatus &&
           locationsGrids.map((item) => {
             return (
@@ -149,7 +148,6 @@ function GeoApi(props) {
               </li>
             );
           })}
-      </ul>
     </div>
   );
 }
