@@ -1,6 +1,6 @@
 import React from 'react'
 // import style from "../styles/Home.module.css";
-import Image from 'next/image'
+import Image from 'next/image';
 import { Box, Card , CardContent, Typography} from '@mui/material';
 import styled from 'styled-components';
 

@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import styled from "styled-components";
 // import styled from "@mui/material";
-import CardContainer from "../CardContainer";
-
+import Image from "next/image";
+import { Box } from "@mui/system";
 
 const StyledCard = styled(Card)`
     margin: 1px;
@@ -16,12 +16,10 @@ const StyledCard = styled(Card)`
     border: 3px solid #0078aa;
     border-radius: 2rem;
     transition: color 0.15s ease, border-color 0.15s ease;
-    /* max-width: fit-content; */
-    /* list-style: none; */
     background: #3ab4f2;
     display: flex;
     position: relative;
-    left: 35rem;
+    left: 5rem;
   
   :hover,
   :focus,
@@ -33,6 +31,11 @@ const StyledCard = styled(Card)`
   }
   `;
 
+const StyledPicture =styled.picture`
+border: 3px solid black;
+  position: relative;
+  left: 75px;
+  top: -90px;`;
   
 
 const CurrentWeather = ({ weatherNow }) => {
@@ -55,21 +58,21 @@ const CurrentWeather = ({ weatherNow }) => {
 
   
   return (
-  
-    <StyledCard sx={{ minWidth: 345, maxWidth: "fit-content"}}> 
-      <CardContent>
+    
+    <StyledCard sx={{ minWidth: 345, maxWidth: "fit-content", alignItems: "center"}}> 
+      <CardContent sx={{ flex:"auto"}}>
         <Typography key={periods.startTime}>
           {firstPeriod.name}
         </Typography>
-        <Typography variant="h3">
+        <Typography variant="subtitle1" sx={{fontSize: "4rem", position: "relative", right: "70px"}}>
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
         </Typography>
         <Typography>
-          <picture>
-          <img src={iconImage} height="80rem" width="80rem" alt="weather icon"
+          <StyledPicture>
+          <Image src={iconImage} height="80rem" width="80rem" alt="weather icon"
           />
-          </picture>
+          </StyledPicture>
         </Typography>
         <Typography variant="h5">
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
@@ -79,7 +82,6 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
       </CardContent>
     </StyledCard>
-      
   );
 };
 

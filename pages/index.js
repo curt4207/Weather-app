@@ -26,7 +26,6 @@ const Button = styled.button`
   }
 `;
 
-
 const ThemeButton = styled.button`
   font-size: 1em;
   margin: 0.5em;
@@ -36,12 +35,7 @@ const ThemeButton = styled.button`
   color: antiquewhite;
 `;
 
-const StyledH1 = styled.h1`
-  font-size: 1rem;
-  position: relative;
-  left: 35rem;
-  `;
-const StyledMonth = styled.div`
+const StyledMonth = styled.h1`
   font-size: 3rem;
   position: relative;
   left: 35rem;
@@ -100,7 +94,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
         <title>Weather App</title>
       </Head>
       <Header>
-        <StyledH1>Rock Sparrow Weather App</StyledH1>
+        Rock Sparrow Weather App
         <ThemeButton type="submit" onClick={toggleTheme}>
           {" "}
           Switch Theme
@@ -122,10 +116,10 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
       <Footer>
+
         <Button type="submit" onClick={logWeatherData}>
           Log Data
         </Button>
-        
       </Footer>
     </div>
   );
