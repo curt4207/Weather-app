@@ -11,6 +11,7 @@ import XYZ from "ol/source/XYZ";
 import { transform } from "ol/proj";
 import { toStringXY } from "ol/coordinate";
 import styled from "styled-components";
+import { transformExtent } from "ol/proj";
 
 const MapContainer = styled.div`
   width: 80%;
@@ -39,30 +40,36 @@ function MapWrapper(props) {
       source: new VectorSource(),
     });
 
+    const viewLimited = new View({
+      center: [328627.563458, 5921296.662223],
+      zoom: 8,
+      extent: [-572513.341856, 5211017.966314, 916327.095083, 6636950.728974],
+    });
+
     // create map
     const initialMap = new Map({
       target: mapElement.current,
       layers: [
         // USGS Topo
-        new TileLayer({
-          source: new XYZ({
-            url: "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
-          }),
-        }),
+        // new TileLayer({
+        //   source: new XYZ({
+        //     url: "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+        //   }),
+        // }),
 
         // Google Maps Terrain
-        /* new TileLayer({
+        new TileLayer({
           source: new XYZ({
-            url: 'http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}',
-          })
-        }), */
+            url: "http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}",
+          }),
+        }),
 
         initalFeaturesLayer,
       ],
       view: new View({
-        projection: "EPSG:3857",
-        center: [0, 0],
-        zoom: 2,
+        center: [328627.563458, 5921296.662223],
+        zoom: 1,
+        extent: transformExtent([230, 24, 295, 49], "EPSG:4326", "EPSG:3857"),
       }),
       controls: [],
     });

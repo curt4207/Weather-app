@@ -103,7 +103,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   };
 
   useEffect(() => {
-    fetch("/mock-geojson-api.json")
+    fetch("/gz_2010_us_outline_20m.json")
       .then((response) => response.json())
       .then((fetchedFeatures) => {
         // parse fetched geojson into OpenLayers features
