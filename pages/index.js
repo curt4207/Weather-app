@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
 import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
-
 import CardContainer from "../components/CardContainer";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SignIn from "../components/SignIn";
+import UserProfile from "../components/UserProfile";
 import { toggleTheme } from "./_app";
+import MapWrapper from "../components/MapWrapper";
+import GeoJSON from "ol/format/GeoJSON";
+import Feature from "ol/Feature";
 
 const Button = styled.button`
   background-color: #f2df3a;
@@ -52,10 +56,6 @@ const ThemeButton = styled.button`
   color: antiquewhite;
 `;
 
-import SignIn from "../components/SignIn";
-import UserProfile from "../components/UserProfile";
-import PastWeather from "../components/PastWeather";
-
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
   const data = await res.json();
@@ -86,6 +86,8 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   const [signInStatus, setSignInStatus] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [features, setFeatures] = useState([]);
+  const [mapDisplayStatus, setMapDisplayStatus] = useState(false);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
@@ -99,6 +101,24 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const toggleTheme = () => {
     theme == "light" ? setTheme("dark") : setTheme("light");
   };
+
+  useEffect(() => {
+    fetch("/mock-geojson-api.json")
+      .then((response) => response.json())
+      .then((fetchedFeatures) => {
+        // parse fetched geojson into OpenLayers features
+        //  use options to convert feature from EPSG:4326 to EPSG:3857
+        const wktOptions = {
+          dataProjection: "EPSG:4326",
+          featureProjection: "EPSG:3857",
+        };
+        const parsedFeatures = new GeoJSON().readFeatures(fetchedFeatures, wktOptions);
+
+        // set features into state (which will be passed into OpenLayers
+        //  map component as props)
+        setFeatures(parsedFeatures);
+      });
+  }, []);
 
   return (
     <div>
@@ -123,7 +143,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
-      <PastWeather />
+      <MapWrapper features={features} mapDisplayStatus={mapDisplayStatus} setMapDisplayStatus={setMapDisplayStatus} />
       <FooterWrapper>
         <Button type="submit" onClick={logWeatherData}>
           Log Data
