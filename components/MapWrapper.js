@@ -1,6 +1,6 @@
 // react
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+
 // openlayers
 import Map from "ol/Map";
 import View from "ol/View";
@@ -10,18 +10,12 @@ import VectorSource from "ol/source/Vector";
 import XYZ from "ol/source/XYZ";
 import { transform } from "ol/proj";
 import { toStringXY } from "ol/coordinate";
+import styled from "styled-components";
 
 const MapContainer = styled.div`
-  width: 100%;
-  height: 1000px;
-`;
-
-const clickedCoordLabel = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  background: white;
-  border-radius: 5px;
+  width: 80%;
+  height: 600px;
+  margin: auto;
 `;
 
 function MapWrapper(props) {
@@ -39,13 +33,6 @@ function MapWrapper(props) {
   mapRef.current = map;
 
   // initialize map on first render - logic formerly put into componentDidMount
-  const showHideMap = () => {
-    if (!props.mapDisplayStatus) {
-      props.setMapDisplayStatus(true);
-    } else {
-      props.setMapDisplayStatus(false);
-    }
-  };
   useEffect(() => {
     // create and add vector source layer
     const initalFeaturesLayer = new VectorLayer({
@@ -118,17 +105,12 @@ function MapWrapper(props) {
 
     // set React state
     setSelectedCoord(transormedCoord);
+
+    console.log(transormedCoord);
   };
 
   // render component
-  return (
-    <div>
-      <MapContainer ref={mapElement}></MapContainer>
-      <div>
-        <p>{selectedCoord ? toStringXY(selectedCoord, 5) : ""}</p>
-      </div>
-    </div>
-  );
+  return <MapContainer ref={mapElement}></MapContainer>;
 }
 
 export default MapWrapper;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import fire from "../config/fire-conf";
 
 function GeoApi(props) {
-  const { setWeatherForecast, setWeatherNow, userData, signInStatus } = props;
+  const { setWeatherForecast, setWeatherNow, userData, signInStatus, setLongLat } = props;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [locationName, setLocationName] = useState("Linn, Kansas");
@@ -51,6 +51,7 @@ function GeoApi(props) {
     const long = firstData.data[searchHitIndex].longitude;
     const lat = firstData.data[searchHitIndex].latitude;
     setLocationName(firstData.data[searchHitIndex].label);
+    setLongLat([long, lat]);
 
     return { long, lat };
   }

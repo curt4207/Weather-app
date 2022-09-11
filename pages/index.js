@@ -87,7 +87,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const [signInStatus, setSignInStatus] = useState(false);
   const [userData, setUserData] = useState(null);
   const [features, setFeatures] = useState([]);
-  const [mapDisplayStatus, setMapDisplayStatus] = useState(false);
+  const [longLat, setLongLat] = useState([39.7456, -97.0892]);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
@@ -136,19 +136,18 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
         <UserProfile userData={userData} signInStatus={signInStatus} />
       </Header>
-
       <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
       </CurrentWeatherWrapper>
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
-      <MapWrapper features={features} mapDisplayStatus={mapDisplayStatus} setMapDisplayStatus={setMapDisplayStatus} />
+      <MapWrapper features={features} longLat={longLat} />
       <FooterWrapper>
         <Button type="submit" onClick={logWeatherData}>
           Log Data
         </Button>
-        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
+        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} setLongLat={setLongLat} />
       </FooterWrapper>
     </div>
   );
