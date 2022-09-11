@@ -1,7 +1,7 @@
 import React from 'react'
 // import style from "../styles/Home.module.css";
 import Image from 'next/image'
-import { Card , CardContent, Typography} from '@mui/material';
+import { Box, Card , CardContent, Typography} from '@mui/material';
 import styled from 'styled-components';
 
 const StyledDiv = styled.div`
@@ -13,8 +13,7 @@ function WeeklyForecast({ weeklyWeather }) {
   const firstPeriod = periods[0];
 
   return (
-    <div>
-
+    <Box sx={{ display: "flex"}}>
       {periods.map((item, index) => {
         if(index == 0 || item.isDaytime === false) {
           return;
@@ -42,7 +41,7 @@ function WeeklyForecast({ weeklyWeather }) {
         );
       })
       }
-    </div>
+    </Box>
   )
 }
 

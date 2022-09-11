@@ -8,7 +8,7 @@ import CardContainer from "../CardContainer";
 
 
 const StyledCard = styled(Card)`
-    margin: 10px;
+    margin: 1px;
     padding: 0.5rem;
     text-align: center;
     color: #f8f0f0;
