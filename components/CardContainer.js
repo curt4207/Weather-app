@@ -17,7 +17,7 @@ import styled from "styled-components";
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="md" >
-                <Box sx={{backgroundColor: "gray", height: "fit-content", padding: "3px", margin: "3px", border: "solid black 4px", display: "flex", flexDirection: "row", padding: "2px"}}>{children}</Box>
+                <Box sx={{backgroundColor: "gray", height: "fit-content", width: "fit-content", padding: "1px", margin: "3px", border: "solid black 4px", display: "flex", flexDirection: "row"}}>{children}</Box>
             </Container>
         </React.Fragment>
     )
