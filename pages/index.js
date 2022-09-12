@@ -124,9 +124,6 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       </CardContainer>
       <MapWrapper longLat={longLat} />
       <FooterWrapper>
-        <Button type="submit" onClick={logWeatherData}>
-          Log Data
-        </Button>
         <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} setLongLat={setLongLat} />
       </FooterWrapper>
     </div>
