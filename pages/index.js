@@ -102,24 +102,6 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
     theme == "light" ? setTheme("dark") : setTheme("light");
   };
 
-  useEffect(() => {
-    fetch("/gz_2010_us_outline_20m.json")
-      .then((response) => response.json())
-      .then((fetchedFeatures) => {
-        // parse fetched geojson into OpenLayers features
-        //  use options to convert feature from EPSG:4326 to EPSG:3857
-        const wktOptions = {
-          dataProjection: "EPSG:4326",
-          featureProjection: "EPSG:3857",
-        };
-        const parsedFeatures = new GeoJSON().readFeatures(fetchedFeatures, wktOptions);
-
-        // set features into state (which will be passed into OpenLayers
-        //  map component as props)
-        setFeatures(parsedFeatures);
-      });
-  }, []);
-
   return (
     <div>
       <Head>
@@ -142,7 +124,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
-      <MapWrapper features={features} longLat={longLat} />
+      <MapWrapper longLat={longLat} />
       <FooterWrapper>
         <Button type="submit" onClick={logWeatherData}>
           Log Data
