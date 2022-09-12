@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import fire from "../config/fire-conf";
+import "firebase/firestore";
+import "firebase/auth";
 
 function GeoApi(props) {
   const { setWeatherForecast, setWeatherNow, userData, signInStatus, setLongLat } = props;

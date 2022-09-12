@@ -11,8 +11,6 @@ import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
 import { toggleTheme } from "./_app";
 import MapWrapper from "../components/MapWrapper";
-import GeoJSON from "ol/format/GeoJSON";
-import Feature from "ol/Feature";
 
 const Button = styled.button`
   background-color: #f2df3a;
