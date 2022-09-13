@@ -18,8 +18,9 @@ const StyledCard = styled(Card)`
     transition: color 0.15s ease, border-color 0.15s ease;
     background: #034c8c;
     display: flex;
-    position: relative;
-    left: 500px;
+    position: absolute;
+    top: 25vh;
+    left: 25vw;
   
   :hover,
   :focus,
@@ -31,12 +32,14 @@ const StyledCard = styled(Card)`
   }
   `;
 
-const StyledPicture =styled.picture`
-border: 3px solid black;
+const StyledPicture = styled.picture`
   position: relative;
   left: 75px;
   top: -90px;
   `;
+  const StyledImage = styled(Image)`
+  border: 3px solid black !important;
+    `;
   
 
 const CurrentWeather = ({ weatherNow }) => {
@@ -60,7 +63,7 @@ const CurrentWeather = ({ weatherNow }) => {
   
   return (
     <Box sx={{display: "flex"}}>
-    <StyledCard sx={{ minWidth: 345, maxWidth: "fit-content", alignItems: "center"}}> 
+    <StyledCard sx={{ minWidth: "345px", maxWidth: "fit-content", maxHeight: "340px", alignItems: "center"}}> 
       <CardContent sx={{ flex:"auto"}}>
         <Typography key={periods.startTime}>
           {firstPeriod.name}
@@ -71,12 +74,10 @@ const CurrentWeather = ({ weatherNow }) => {
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
         </Typography>
-        <Typography>
-          <StyledPicture>
-          <Image src={iconImage} height="80rem" width="80rem" alt="weather icon"
+        <StyledPicture>
+          <StyledImage src={iconImage} height="80rem" width="80rem" alt="weather icon"
           />
           </StyledPicture>
-        </Typography>
         <Typography variant="h5" sx={{position: "relative"}}>
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
         </Typography>

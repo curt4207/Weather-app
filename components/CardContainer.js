@@ -8,7 +8,7 @@ import styled from "styled-components";
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="md" >
-                <Box sx={{backgroundColor: "#F2E205", height: "fit-content", width: "fit-content", padding: "1px", margin: "1px", border: "solid black 4px", display: "flex", flexDirection: "row", position: "relative", left: "100px",top: "10px"}}>{children}</Box>
+                <Box sx={{backgroundColor: "#F2E205", height: "fit-content", width: "fit-content", padding: "1px", margin: "1px", border: "solid black 3px", display: "flex", flexDirection: "row", position: "absolute", left: "10vw",top: "550px"}}>{children}</Box>
             </Container>
         </React.Fragment>
     )

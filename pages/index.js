@@ -39,9 +39,14 @@ const StyledMonth = styled.h1`
   margin: 1px;
   padding: 1px;
   font-size: 3rem;
-  position: relative;
-  left: 500px;
+  position: absolute;
+  left: 28vw;
+  top: 16vh;
   `;
+  const StyledSignIn = styled.div`
+    position: absolute;
+    top: 3rem;
+    `;
 
 import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
@@ -105,12 +110,14 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
         <StyledMonth>
         {monthNames[month]}
         </StyledMonth>
+
+        <StyledSignIn>
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
 
         <UserProfile userData={userData} signInStatus={signInStatus} />
 
         <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
-
+        </StyledSignIn>
       
         <CurrentWeather weatherNow={weatherNow} />
       <CardContainer>
