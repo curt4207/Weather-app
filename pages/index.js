@@ -36,9 +36,11 @@ const ThemeButton = styled.button`
 `;
 
 const StyledMonth = styled.h1`
+  margin: 1px;
+  padding: 1px;
   font-size: 3rem;
   position: relative;
-  left: 35rem;
+  left: 500px;
   `;
 
 import SignIn from "../components/SignIn";

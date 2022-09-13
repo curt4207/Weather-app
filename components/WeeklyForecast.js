@@ -20,7 +20,11 @@ function WeeklyForecast({ weeklyWeather }) {
         }
         return (
           <div key={index}>
-          <Card sx={{maxWidth: "fit-content"}} >
+          <Card sx={{maxWidth: "fit-content", backgroundColor: "#F2A057", border: "1px solid #034C8C","&:hover": {
+            backgroundColor: "#034C8C",
+            color: "#F2E205",
+            scale: "1.3"
+          }}} >
             <CardContent >
           <Typography fontSize={15}>
             {item.name}

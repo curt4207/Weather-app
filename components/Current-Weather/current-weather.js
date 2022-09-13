@@ -9,24 +9,24 @@ import { Box } from "@mui/system";
 
 const StyledCard = styled(Card)`
     margin: 1px;
-    padding: 0.5rem;
+    padding: 1px;
     text-align: center;
     color: #f8f0f0;
     text-decoration: none;
     border: 3px solid #0078aa;
-    border-radius: 2rem;
+    border-radius: 50px;
     transition: color 0.15s ease, border-color 0.15s ease;
-    background: #3ab4f2;
+    background: #034c8c;
     display: flex;
     position: relative;
-    left: 5rem;
+    left: 500px;
   
   :hover,
   :focus,
   :active {
     color: #0078aa;
     border-color: #0078aa;
-    background-color: #f6f6f6;
+    background-color: #F2A057;
     cursor: default;
   }
   `;
@@ -35,7 +35,8 @@ const StyledPicture =styled.picture`
 border: 3px solid black;
   position: relative;
   left: 75px;
-  top: -90px;`;
+  top: -90px;
+  `;
   
 
 const CurrentWeather = ({ weatherNow }) => {
@@ -74,7 +75,7 @@ const CurrentWeather = ({ weatherNow }) => {
           />
           </StyledPicture>
         </Typography>
-        <Typography variant="h5">
+        <Typography variant="h5" sx={{position: "relative"}}>
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
         </Typography>
         <Typography variant="subtitle2">
