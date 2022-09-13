@@ -51,7 +51,7 @@ const CurrentWeather = ({ weatherNow }) => {
         {weatherNow.status}
       </h1>
     );
-  }
+  };
 
   const periods = properties.periods;
   const firstPeriod = periods[0];
@@ -65,7 +65,9 @@ const CurrentWeather = ({ weatherNow }) => {
         <Typography key={periods.startTime}>
           {firstPeriod.name}
         </Typography>
-        <Typography variant="subtitle1" sx={{fontSize: "4rem", position: "relative", right: "70px"}}>
+        <Typography variant="subtitle1" sx={{fontSize: "3rem", position: "relative", right: "70px"}}>
+          Today
+          <br/>
           {firstPeriod.startTime[8]}
           {firstPeriod.startTime[9]}
         </Typography>
@@ -83,7 +85,7 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
       </CardContent>
     </StyledCard>
-    </Box>
+    </Box> 
   );
 };
 

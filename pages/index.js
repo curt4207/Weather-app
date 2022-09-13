@@ -113,12 +113,10 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
 
       
         <CurrentWeather weatherNow={weatherNow} />
-     
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
       <Footer>
-
         <Button type="submit" onClick={logWeatherData}>
           Log Data
         </Button>
