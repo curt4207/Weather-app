@@ -59,7 +59,7 @@ const CurrentWeather = ({ weatherNow }) => {
 
   
   return (
-    
+    <Box sx={{display: "flex"}}>
     <StyledCard sx={{ minWidth: 345, maxWidth: "fit-content", alignItems: "center"}}> 
       <CardContent sx={{ flex:"auto"}}>
         <Typography key={periods.startTime}>
@@ -83,6 +83,7 @@ const CurrentWeather = ({ weatherNow }) => {
         </Typography>
       </CardContent>
     </StyledCard>
+    </Box>
   );
 };
 
