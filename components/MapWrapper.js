@@ -37,7 +37,7 @@ function MapWrapper(props) {
       view: new View({
         center: [0, 0],
         zoom: 1,
-        extent: transform([-135, 23, -53, 49.5]),
+        extent: transform([-140, 25, -57, 49.5]),
       }),
       controls: [],
     });

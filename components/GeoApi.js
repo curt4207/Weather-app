@@ -11,6 +11,7 @@ function GeoApi(props) {
   const [locationName, setLocationName] = useState("Linn, Kansas");
   const [locationsGrids, setLocationsGrids] = useState([{ id: "Linn, Kansas", office: "TOP", gridX: 31, gridY: 80 }]);
   const [currentLocationGrid, setCurrentLocationGrid] = useState({ office: "TOP", gridX: 31, gridY: 80 });
+  const [errorStatus, setErrorStatus] = useState(false);
   const API_KEY = process.env.NEXT_PUBLIC_GEOLOCATION_API_KEY;
 
   const fetchSavedLocations = () => {
@@ -43,19 +44,26 @@ function GeoApi(props) {
     if (API_KEY === null) {
       console.log("Geolocation API key not set.");
     }
+
     const firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
     const firstData = await firstRes.json();
-    let searchHitIndex = 0;
-    while (firstData.data[searchHitIndex].country_code !== "USA") {
-      searchHitIndex++;
+    let long = 0;
+    let lat = 0;
+
+    for (let searchHitIndex = 0; searchHitIndex < firstData.data.length; searchHitIndex++) {
+      if (firstData.data[searchHitIndex].country_code === "USA") {
+        long = firstData.data[searchHitIndex].longitude;
+        lat = firstData.data[searchHitIndex].latitude;
+        setLocationName(firstData.data[searchHitIndex].label);
+        setLongLat([long, lat]);
+
+        return { long, lat };
+      }
     }
 
-    const long = firstData.data[searchHitIndex].longitude;
-    const lat = firstData.data[searchHitIndex].latitude;
-    setLocationName(firstData.data[searchHitIndex].label);
-    setLongLat([long, lat]);
-
-    return { long, lat };
+    setErrorStatus(true);
+    alert("Location not found in the US.");
+    return null;
   }
 
   async function fetchGrid(long, lat) {
@@ -100,20 +108,26 @@ function GeoApi(props) {
 
   //Gets weather data when Search button clicked
   const handleSubmit = async (e) => {
+    let errorStatus = true;
     e.preventDefault();
     if (searchTerm.trim() === "") {
       return;
     }
-    const longLat = fetchCoords();
-    const long = (await longLat).long;
-    const lat = (await longLat).lat;
 
-    const gridData = fetchGrid(long, lat);
-    const office = (await gridData).office;
-    const gridX = (await gridData).gridX;
-    const gridY = (await gridData).gridY;
+    const longLat = await fetchCoords();
+    if (longLat) {
+      const long = (await longLat).long;
+      const lat = (await longLat).lat;
 
-    fetchWeatherData(office, gridX, gridY);
+      const gridData = fetchGrid(long, lat);
+      const office = (await gridData).office;
+      const gridX = (await gridData).gridX;
+      const gridY = (await gridData).gridY;
+
+      fetchWeatherData(office, gridX, gridY);
+    } else {
+      return;
+    }
   };
 
   const saveLocation = () => {
