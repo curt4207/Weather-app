@@ -8,7 +8,10 @@ import GeoApi from "../components/GeoApi";
 import CardContainer from "../components/CardContainer";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { toggleTheme } from "./_app";
+// import { toggleTheme } from "./_app";
+
+import SignIn from "../components/SignIn";
+import UserProfile from "../components/UserProfile";
 
 const Button = styled.button`
   background-color: #f2df3a;
@@ -33,23 +36,31 @@ const ThemeButton = styled.button`
   border: 2px solid;
   background-color: darkblue;
   color: antiquewhite;
+
+  :hover {
+    color: #F2E205;
+  }
 `;
 
 const StyledMonth = styled.h1`
   margin: 1px;
   padding: 1px;
   font-size: 3rem;
-  position: absolute;
-  left: 28vw;
-  top: 16vh;
+  text-align: center;
   `;
-  const StyledSignIn = styled.div`
-    position: absolute;
-    top: 3rem;
-    `;
 
-import SignIn from "../components/SignIn";
-import UserProfile from "../components/UserProfile";
+const StyledContainer = styled.div`
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  `;
+const StyledUserContainer = styled.div`
+  border: 2px solid green;
+  text-align: center;
+  width: fit-content;
+  flex-direction: column;
+  `;
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -106,23 +117,24 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
           {" "}
           Switch Theme
         </ThemeButton>
-        </Header>
-        <StyledMonth>
-        {monthNames[month]}
-        </StyledMonth>
+      </Header>
 
-        <StyledSignIn>
+      <StyledUserContainer>
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
 
         <UserProfile userData={userData} signInStatus={signInStatus} />
 
         <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
-        </StyledSignIn>
-      
+      </StyledUserContainer>
+      <StyledContainer>
+        <StyledMonth>
+          {monthNames[month]}
+        </StyledMonth>
         <CurrentWeather weatherNow={weatherNow} />
-      <CardContainer>
-        <WeeklyForecast weeklyWeather={weatherForecast} />
-      </CardContainer>
+        <CardContainer>
+          <WeeklyForecast weeklyWeather={weatherForecast} />
+        </CardContainer>
+      </StyledContainer>
       <Footer>
         <Button type="submit" onClick={logWeatherData}>
           Log Data

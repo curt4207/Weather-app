@@ -7,11 +7,14 @@ import styled from "styled-components";
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="md" >
-                <Box sx={{backgroundColor: "#F2E205", height: "fit-content", width: "fit-content", padding: "1px", margin: "1px", border: "solid black 3px", display: "flex", flexDirection: "row", position: "absolute", left: "10vw",top: "600px"}}>{children}</Box>
+            <Container maxWidth="100%" >
+                <Box sx={{backgroundColor: "#F2E205", height: "fit-content", width: "fit-content",maxWidth: "100%", padding: "0.5rem", border: "solid black 3px", display: "flex", flexDirection: "row", marginLeft: "auto", marginRight: "auto", overflow: "scroll", "&::-webkit-scrollbar": {
+                    display: "none"
+                }}}>{children}</Box>
             </Container>
         </React.Fragment>
     )
  };
 
 export default CardContainer;
+// position: "absolute", left: "10vw",top: "600px"

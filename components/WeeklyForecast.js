@@ -20,7 +20,8 @@ function WeeklyForecast({ weeklyWeather }) {
         }
         return (
           <div key={index}>
-          <Card sx={{Width: "fit-content", backgroundColor: "#F2A057", border: "1px solid #034C8C","&:hover": {
+          <Card sx={{Width: "fit-content", backgroundColor: "#F2A057", border: "1px solid #034C8C",margin: "1rem",
+          "&:hover": {
             backgroundColor: "#034C8C",
             color: "#F2E205",
             scale: "1.2"
@@ -32,8 +33,8 @@ function WeeklyForecast({ weeklyWeather }) {
           <Image
             src={item.icon}
             alt="icon"
-            width="60rem"
-            height="60rem"
+            width="50rem"
+            height="50rem"
           />
           <Typography >
             {item.temperature}{firstPeriod.temperatureUnit}

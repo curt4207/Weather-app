@@ -18,9 +18,8 @@ const StyledCard = styled(Card)`
     transition: color 0.15s ease, border-color 0.15s ease;
     background: #034c8c;
     display: flex;
-    position: absolute;
-    top: 25vh;
-    left: 25vw;
+    margin-left: auto;
+    margin-right: auto;
   
   :hover,
   :focus,
@@ -33,14 +32,15 @@ const StyledCard = styled(Card)`
   `;
 
 const StyledPicture = styled.picture`
-  position: relative;
-  left: 75px;
-  top: -90px;
-  `;
-  const StyledImage = styled(Image)`
+
+`;
+const StyledImage = styled(Image)`
   border: 3px solid black !important;
-    `;
-  
+`;
+
+const StyledDiv = styled.div`
+display: flex;
+`;
 
 const CurrentWeather = ({ weatherNow }) => {
   const properties = weatherNow.properties;
@@ -63,21 +63,20 @@ const CurrentWeather = ({ weatherNow }) => {
   
   return (
     <Box sx={{display: "flex"}}>
-    <StyledCard sx={{ minWidth: "345px", maxWidth: "fit-content", maxHeight: "340px", alignItems: "center"}}> 
-      <CardContent sx={{ flex:"auto"}}>
-        <Typography key={periods.startTime}>
-          {firstPeriod.name}
-        </Typography>
-        <Typography variant="subtitle1" sx={{fontSize: "3rem", position: "relative", right: "70px"}}>
-          Today
-          <br/>
-          {firstPeriod.startTime[8]}
-          {firstPeriod.startTime[9]}
-        </Typography>
-        <StyledPicture>
-          <StyledImage src={iconImage} height="80rem" width="80rem" alt="weather icon"
-          />
+      <StyledCard sx={{width: "fit-content", maxWidth: "fit-content", maxHeight: "100%", alignItems: "center"}}> 
+        <CardContent sx={{ flex:"auto", width: "fit-content"}}>
+        <StyledDiv>
+          <Typography variant="subtitle1" sx={{fontSize: "2rem", margin: "5px"}}>
+            Today
+            <br/>
+            {firstPeriod.startTime[8]}
+            {firstPeriod.startTime[9]}
+          </Typography>
+          <StyledPicture>
+            <StyledImage src={iconImage} height="80rem" width="80rem" alt="weather icon"
+            />
           </StyledPicture>
+        </StyledDiv>
         <Typography variant="h5" sx={{position: "relative"}}>
           {firstPeriod.temperature}°{firstPeriod.temperatureUnit}
         </Typography>
