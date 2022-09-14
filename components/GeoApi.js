@@ -104,7 +104,6 @@ function GeoApi(props) {
     const firstData = await firstRes.json().then((res) => {
       setWeatherNow(res);
       setLongLat([res.geometry.coordinates[0][0][0], res.geometry.coordinates[0][0][1]]);
-      console.log(longLat);
     });
 
     const secondRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast?units=us`);
