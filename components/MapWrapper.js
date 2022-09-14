@@ -2,10 +2,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 // openlayers
-import { Map, View } from "ol";
+import { Map, View, Feature } from "ol";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
-import { transformExtent } from "ol/proj";
+import { transformExtent, fromLonLat } from "ol/proj";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import { Icon, Style, Circle, Fill, Stroke } from "ol/style";
+import { Point } from "ol/geom";
+import TileJSON from "ol/source/TileJSON";
 
 const MapContainer = styled.div`
   width: 80%;
@@ -15,12 +20,37 @@ const MapContainer = styled.div`
 
 function MapWrapper(props) {
   // set intial state
+  const { longLat, map, setMap, mapLayerSwitch, setMapLayerSwitch } = props;
   const [mapDisplay, setMapDisplay] = useState(false);
-  const [map, setMap] = useState();
 
   const mapContainer = useRef();
   const mapRef = useRef();
   mapRef.current = map;
+
+  const initialLayer = new TileLayer({
+    source: new OSM(),
+  });
+  const marker = new Feature({
+    geometry: new Point(fromLonLat([longLat[0], longLat[1]])),
+  });
+  let vectorLayer = new VectorLayer({
+    source: new VectorSource({
+      features: [marker],
+    }),
+  });
+  const pointStyle = new Style({
+    image: new Circle({
+      radius: 12,
+      fill: new Fill({
+        color: "orange",
+      }),
+      stroke: new Stroke({
+        color: "orange",
+        width: 2,
+      }),
+    }),
+  });
+  vectorLayer.setStyle(pointStyle);
 
   function transform(extent) {
     return transformExtent(extent, "EPSG:4326", "EPSG:3857");
@@ -29,11 +59,7 @@ function MapWrapper(props) {
   useEffect(() => {
     const initialMap = new Map({
       target: mapContainer.current,
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-      ],
+      layers: [initialLayer, vectorLayer],
       view: new View({
         center: [0, 0],
         zoom: 1,
@@ -41,8 +67,19 @@ function MapWrapper(props) {
       }),
       controls: [],
     });
+
     setMap(initialMap);
   }, [mapDisplay]);
+
+  useEffect(() => {
+    if (map) {
+      const layerLength = map.getLayers().array_.length;
+      map.addLayer(vectorLayer);
+      if (layerLength > 1) {
+        map.removeLayer(map.getLayers().array_[1]);
+      }
+    }
+  }, [longLat]);
 
   const loadMap = () => {
     if (mapDisplay) {

@@ -84,8 +84,9 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   const [signInStatus, setSignInStatus] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [features, setFeatures] = useState([]);
-  const [longLat, setLongLat] = useState([39.7456, -97.0892]);
+  const [longLat, setLongLat] = useState([-97.0892, 39.7456]);
+  const [map, setMap] = useState(null);
+  const [mapLayerSwitch, setMapLayerSwitch] = useState(true);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
@@ -122,9 +123,19 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
-      <MapWrapper longLat={longLat} />
+      <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} />
       <FooterWrapper>
-        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} setLongLat={setLongLat} />
+        <GeoApi
+          setWeatherForecast={setWeatherForecast}
+          setWeatherNow={setWeatherNow}
+          userData={userData}
+          signInStatus={signInStatus}
+          longLat={longLat}
+          setLongLat={setLongLat}
+          map={map}
+          mapLayerSwitch={mapLayerSwitch}
+          setMapLayerSwitch={setMapLayerSwitch}
+        />
       </FooterWrapper>
     </div>
   );

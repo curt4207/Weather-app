@@ -3,9 +3,14 @@ import styled from "styled-components";
 import fire from "../config/fire-conf";
 import "firebase/firestore";
 import "firebase/auth";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import { Feature } from "ol";
+import { Point } from "ol/geom";
+import { fromLonLat } from "ol/proj";
 
 function GeoApi(props) {
-  const { setWeatherForecast, setWeatherNow, userData, signInStatus, setLongLat } = props;
+  const { setWeatherForecast, setWeatherNow, userData, signInStatus, longLat, setLongLat, map, mapLayerSwitch, setMapLayerSwitch } = props;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [locationName, setLocationName] = useState("Linn, Kansas");
@@ -108,11 +113,15 @@ function GeoApi(props) {
 
   //Gets weather data when Search button clicked
   const handleSubmit = async (e) => {
-    let errorStatus = true;
     e.preventDefault();
     if (searchTerm.trim() === "") {
       return;
     }
+    // if (mapLayerSwitch) {
+    //   setMapLayerSwitch(false);
+    // } else {
+    //   setMapLayerSwitch(true);
+    // }
 
     const longLat = await fetchCoords();
     if (longLat) {
@@ -144,13 +153,12 @@ function GeoApi(props) {
     fire.firestore().collection(userData.additionalUserInfo.profile.id).doc(location).delete();
     const newList = locationsGrids.filter((item) => item.id !== location);
     setLocationsGrids(newList);
-    console.log(newList);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleChange} />
+      <form autoComplete="off" onSubmit={handleSubmit}>
+        <input autoComplete="off" type="text" onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
       <p>{locationName}</p>
