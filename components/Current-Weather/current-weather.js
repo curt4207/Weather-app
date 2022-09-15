@@ -28,6 +28,7 @@ const StyledCard = styled(Card)`
     border-color: #0078aa;
     background-color: #F2A057;
     cursor: default;
+    
   }
   `;
 

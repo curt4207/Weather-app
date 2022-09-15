@@ -24,7 +24,7 @@ function WeeklyForecast({ weeklyWeather }) {
           "&:hover": {
             backgroundColor: "#034C8C",
             color: "#F2E205",
-            scale: "1.2"
+            scale: "1.3"
           }}} >
             <CardContent >
           <Typography fontSize={15}>

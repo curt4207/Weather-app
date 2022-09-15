@@ -39,6 +39,7 @@ const ThemeButton = styled.button`
 
   :hover {
     color: #F2E205;
+    scale: 1.2; 
   }
 `;
 
@@ -60,6 +61,7 @@ const StyledUserContainer = styled.div`
   text-align: center;
   width: fit-content;
   flex-direction: column;
+  font-size: 1.2rem;
   `;
 
 async function getPointData(longitude, latitude) {
@@ -117,11 +119,11 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
           {" "}
           Switch Theme
         </ThemeButton>
-      </Header>
-
-      <StyledUserContainer>
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
 
+      </Header>
+      <StyledUserContainer>
+       
         <UserProfile userData={userData} signInStatus={signInStatus} />
 
         <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
