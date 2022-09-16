@@ -47,11 +47,37 @@ const CurrentWeatherWrapper = styled.div`
 
 const ThemeButton = styled.button`
   font-size: 1em;
-  margin: 1em;
+  margin: 0.5em;
   padding: 0.25em;
   border: 2px solid;
   background-color: darkblue;
   color: antiquewhite;
+
+  :hover {
+    color: #f2e205;
+    scale: 1.2;
+  }
+`;
+
+const StyledMonth = styled.h1`
+  margin: 1px;
+  padding: 1px;
+  font-size: 3rem;
+  text-align: center;
+`;
+
+const StyledContainer = styled.div`
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+`;
+const StyledUserContainer = styled.div`
+  border: 2px solid green;
+  text-align: center;
+  width: fit-content;
+  flex-direction: column;
+  font-size: 1.2rem;
 `;
 
 async function getPointData(longitude, latitude) {
@@ -91,12 +117,6 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
 
-  //Just console logs the weather forecast data
-  const logWeatherData = () => {
-    console.log("Forecast", weatherForecast);
-    console.log("Now", weatherNow);
-  };
-
   const toggleTheme = () => {
     theme == "light" ? setTheme("dark") : setTheme("light");
   };
@@ -106,25 +126,26 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
       <Head>
         <title>Weather App</title>
       </Head>
-
       <Header>
-        <h1>Weather</h1>
+        Rock Sparrow Weather App
         <ThemeButton type="submit" onClick={toggleTheme}>
           {" "}
           Switch Theme
         </ThemeButton>
-        {monthNames[month]}
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
-        <UserProfile userData={userData} signInStatus={signInStatus} />
       </Header>
-      <CurrentWeatherWrapper>
+      <StyledUserContainer>
+        <UserProfile userData={userData} signInStatus={signInStatus} />
+      </StyledUserContainer>
+      <StyledContainer>
+        <StyledMonth>{monthNames[month]}</StyledMonth>
         <CurrentWeather weatherNow={weatherNow} />
-      </CurrentWeatherWrapper>
-      <CardContainer>
-        <WeeklyForecast weeklyWeather={weatherForecast} />
-      </CardContainer>
-      <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} />
-      <FooterWrapper>
+        <CardContainer>
+          <WeeklyForecast weeklyWeather={weatherForecast} />
+        </CardContainer>
+        <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} />
+      </StyledContainer>
+      <Footer>
         <GeoApi
           setWeatherForecast={setWeatherForecast}
           setWeatherNow={setWeatherNow}
@@ -136,7 +157,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
           mapLayerSwitch={mapLayerSwitch}
           setMapLayerSwitch={setMapLayerSwitch}
         />
-      </FooterWrapper>
+      </Footer>
     </div>
   );
 };

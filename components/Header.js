@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.span`
 background-color:  #034c8c;
+color: #F2A057;
+display: flexbox;
+flex-direction: row;
+/* position: fixed;
+top: 0px; */
 `;
 
 const Header = ({children}) => {

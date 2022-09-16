@@ -3,24 +3,18 @@ import { CssBaseline, Box, Container } from "@mui/material";
 import styled from "styled-components";
 
 
-
-// const StyledCardContainer = styled(Container)`
-//     /* display: flex; */
-//     position: fixed;
-//     left: 20rem;
-//     bottom: 5rem;
-//     `;
-
-
  const CardContainer = ({children}) => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="md" >
-                <Box sx={{backgroundColor: "gray", height: "fit-content", padding: "3px", margin: "3px", border: "solid black 4px", display: "flex", flexDirection: "row", padding: "2px"}}>{children}</Box>
+            <Container maxWidth="100%" >
+                <Box sx={{backgroundColor: "#F2E205", height: "fit-content", width: "fit-content",maxWidth: "100%", padding: "0.5rem", border: "solid black 3px", display: "flex", flexDirection: "row", marginLeft: "auto", marginRight: "auto", overflow: "scroll", "&::-webkit-scrollbar": {
+                    display: "none"
+                }}}>{children}</Box>
             </Container>
         </React.Fragment>
     )
  };
 
 export default CardContainer;
+// position: "absolute", left: "10vw",top: "600px"

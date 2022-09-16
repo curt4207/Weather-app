@@ -1,5 +1,4 @@
 import React from "react";
-// import style from "../styles/Home.module.css";
 import Image from "next/image";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
@@ -16,10 +15,22 @@ function WeeklyForecast({ weeklyWeather }) {
         }
         return (
           <div key={index}>
-            <Card sx={{ maxWidth: "fit-content" }}>
+            <Card
+              sx={{
+                Width: "fit-content",
+                backgroundColor: "#F2A057",
+                border: "1px solid #034C8C",
+                margin: "1rem",
+                "&:hover": {
+                  backgroundColor: "#034C8C",
+                  color: "#F2E205",
+                  scale: "1.3",
+                },
+              }}
+            >
               <CardContent>
                 <Typography fontSize={15}>{item.name}</Typography>
-                <Image src={item.icon} alt="icon" width="60rem" height="60rem" />
+                <Image src={item.icon} alt="icon" width="50rem" height="50rem" />
                 <Typography>
                   {item.temperature}
                   {firstPeriod.temperatureUnit}

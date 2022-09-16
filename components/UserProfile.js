@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 function UserProfile(props) {
   const { userData, signInStatus } = props;
@@ -6,7 +7,7 @@ function UserProfile(props) {
   if (signInStatus) {
     return (
       <div>
-        <p>{userData.additionalUserInfo.profile.name}</p>
+        {userData.additionalUserInfo.profile.name}
       </div>
     );
   } else {
