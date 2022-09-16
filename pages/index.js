@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
 import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
-
 import CardContainer from "../components/CardContainer";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SignIn from "../components/SignIn";
+import UserProfile from "../components/UserProfile";
 import { toggleTheme } from "./_app";
+import MapWrapper from "../components/MapWrapper";
 
 const Button = styled.button`
   background-color: #f2df3a;
@@ -37,9 +39,10 @@ const FooterWrapper = styled(Footer)`
 `;
 
 const CurrentWeatherWrapper = styled.div`
-  position: relative;
-  top: 3px;
-  left: 35rem;
+  //position: relative;
+  // top: 3px;
+  // left: 35rem;
+  width: fit-content;
 `;
 
 const ThemeButton = styled.button`
@@ -50,9 +53,6 @@ const ThemeButton = styled.button`
   background-color: darkblue;
   color: antiquewhite;
 `;
-
-import SignIn from "../components/SignIn";
-import UserProfile from "../components/UserProfile";
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -84,6 +84,9 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   const [signInStatus, setSignInStatus] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [longLat, setLongLat] = useState([-97.0892, 39.7456]);
+  const [map, setMap] = useState(null);
+  const [mapLayerSwitch, setMapLayerSwitch] = useState(true);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
@@ -114,18 +117,25 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
         <UserProfile userData={userData} signInStatus={signInStatus} />
       </Header>
-
       <CurrentWeatherWrapper>
         <CurrentWeather weatherNow={weatherNow} />
       </CurrentWeatherWrapper>
       <CardContainer>
         <WeeklyForecast weeklyWeather={weatherForecast} />
       </CardContainer>
+      <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} />
       <FooterWrapper>
-        <Button type="submit" onClick={logWeatherData}>
-          Log Data
-        </Button>
-        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
+        <GeoApi
+          setWeatherForecast={setWeatherForecast}
+          setWeatherNow={setWeatherNow}
+          userData={userData}
+          signInStatus={signInStatus}
+          longLat={longLat}
+          setLongLat={setLongLat}
+          map={map}
+          mapLayerSwitch={mapLayerSwitch}
+          setMapLayerSwitch={setMapLayerSwitch}
+        />
       </FooterWrapper>
     </div>
   );

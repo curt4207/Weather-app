@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import fire from "../config/fire-conf";
+import "firebase/firestore";
+import "firebase/auth";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import { Feature } from "ol";
+import { Point } from "ol/geom";
+import { fromLonLat } from "ol/proj";
 
 function GeoApi(props) {
-  const { setWeatherForecast, setWeatherNow, userData, signInStatus } = props;
+  const { setWeatherForecast, setWeatherNow, userData, signInStatus, longLat, setLongLat, map, mapLayerSwitch, setMapLayerSwitch } = props;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [locationName, setLocationName] = useState("Linn, Kansas");
   const [locationsGrids, setLocationsGrids] = useState([{ id: "Linn, Kansas", office: "TOP", gridX: 31, gridY: 80 }]);
   const [currentLocationGrid, setCurrentLocationGrid] = useState({ office: "TOP", gridX: 31, gridY: 80 });
+  const [errorStatus, setErrorStatus] = useState(false);
   const API_KEY = process.env.NEXT_PUBLIC_GEOLOCATION_API_KEY;
 
   const fetchSavedLocations = () => {
@@ -41,18 +49,26 @@ function GeoApi(props) {
     if (API_KEY === null) {
       console.log("Geolocation API key not set.");
     }
+
     const firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
     const firstData = await firstRes.json();
-    let searchHitIndex = 0;
-    while (firstData.data[searchHitIndex].country_code !== "USA") {
-      searchHitIndex++;
+    let long = 0;
+    let lat = 0;
+
+    for (let searchHitIndex = 0; searchHitIndex < firstData.data.length; searchHitIndex++) {
+      if (firstData.data[searchHitIndex].country_code === "USA") {
+        long = firstData.data[searchHitIndex].longitude;
+        lat = firstData.data[searchHitIndex].latitude;
+        setLocationName(firstData.data[searchHitIndex].label);
+        setLongLat([long, lat]);
+
+        return { long, lat };
+      }
     }
 
-    const long = firstData.data[searchHitIndex].longitude;
-    const lat = firstData.data[searchHitIndex].latitude;
-    setLocationName(firstData.data[searchHitIndex].label);
-
-    return { long, lat };
+    setErrorStatus(true);
+    alert("Location not found in the US.");
+    return null;
   }
 
   async function fetchGrid(long, lat) {
@@ -87,6 +103,7 @@ function GeoApi(props) {
     const firstRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast/hourly?units=us`);
     const firstData = await firstRes.json().then((res) => {
       setWeatherNow(res);
+      setLongLat([res.geometry.coordinates[0][0][0], res.geometry.coordinates[0][0][1]]);
     });
 
     const secondRes = await fetch(`https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast?units=us`);
@@ -101,16 +118,26 @@ function GeoApi(props) {
     if (searchTerm.trim() === "") {
       return;
     }
-    const longLat = fetchCoords();
-    const long = (await longLat).long;
-    const lat = (await longLat).lat;
+    // if (mapLayerSwitch) {
+    //   setMapLayerSwitch(false);
+    // } else {
+    //   setMapLayerSwitch(true);
+    // }
 
-    const gridData = fetchGrid(long, lat);
-    const office = (await gridData).office;
-    const gridX = (await gridData).gridX;
-    const gridY = (await gridData).gridY;
+    const longLat = await fetchCoords();
+    if (longLat) {
+      const long = (await longLat).long;
+      const lat = (await longLat).lat;
 
-    fetchWeatherData(office, gridX, gridY);
+      const gridData = fetchGrid(long, lat);
+      const office = (await gridData).office;
+      const gridX = (await gridData).gridX;
+      const gridY = (await gridData).gridY;
+
+      fetchWeatherData(office, gridX, gridY);
+    } else {
+      return;
+    }
   };
 
   const saveLocation = () => {
@@ -127,13 +154,12 @@ function GeoApi(props) {
     fire.firestore().collection(userData.additionalUserInfo.profile.id).doc(location).delete();
     const newList = locationsGrids.filter((item) => item.id !== location);
     setLocationsGrids(newList);
-    console.log(newList);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleChange} />
+      <form autoComplete="off" onSubmit={handleSubmit}>
+        <input autoComplete="off" type="text" onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
       <p>{locationName}</p>

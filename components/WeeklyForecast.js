@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 // import style from "../styles/Home.module.css";
-import Image from 'next/image'
-import { Card , CardContent, Typography} from '@mui/material';
-import styled from 'styled-components';
-
+import Image from "next/image";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 function WeeklyForecast({ weeklyWeather }) {
   const properties = weeklyWeather.properties;
@@ -11,37 +9,28 @@ function WeeklyForecast({ weeklyWeather }) {
   const firstPeriod = periods[0];
 
   return (
-    <div>
-
+    <Box sx={{ display: "flex" }}>
       {periods.map((item, index) => {
-        if(index == 0 || item.isDaytime === false) {
+        if (index == 0 || item.isDaytime === false) {
           return;
         }
         return (
           <div key={index}>
-          <Card sx={{maxWidth: "fit-content"}} >
-            <CardContent>
-          <Typography fontSize={15}>
-            {item.name}
-            </Typography>
-          <Image
-            src={item.icon}
-            alt="icon"
-            width="60rem"
-            height="60rem"
-          />
-          <Typography>
-            {item.temperature}{firstPeriod.temperatureUnit}
-          </Typography>
-          </CardContent>
-          </Card>
-        </div>
-        
+            <Card sx={{ maxWidth: "fit-content" }}>
+              <CardContent>
+                <Typography fontSize={15}>{item.name}</Typography>
+                <Image src={item.icon} alt="icon" width="60rem" height="60rem" />
+                <Typography>
+                  {item.temperature}
+                  {firstPeriod.temperatureUnit}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
         );
-      })
-      }
-    </div>
-  )
+      })}
+    </Box>
+  );
 }
 
-export default WeeklyForecast
+export default WeeklyForecast;
