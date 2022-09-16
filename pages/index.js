@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import CurrentWeather from "../components/Current-Weather/current-weather";
 import WeeklyForecast from "../components/WeeklyForecast";
 import GeoApi from "../components/GeoApi";
-
 import CardContainer from "../components/CardContainer";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import { toggleTheme } from "./_app";
-
 import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
+import { toggleTheme } from "./_app";
+import MapWrapper from "../components/MapWrapper";
 
 const Button = styled.button`
   background-color: #f2df3a;
@@ -29,6 +28,23 @@ const Button = styled.button`
   }
 `;
 
+const FooterWrapper = styled(Footer)`
+  box-sizing: border-box;
+  border: 5px solid;
+  position: fixed;
+  bottom: 5px;
+  border-color: black;
+  background-color: blue;
+  max-width: fit-content;
+`;
+
+const CurrentWeatherWrapper = styled.div`
+  //position: relative;
+  // top: 3px;
+  // left: 35rem;
+  width: fit-content;
+`;
+
 const ThemeButton = styled.button`
   font-size: 1em;
   margin: 0.5em;
@@ -38,8 +54,8 @@ const ThemeButton = styled.button`
   color: antiquewhite;
 
   :hover {
-    color: #F2E205;
-    scale: 1.2; 
+    color: #f2e205;
+    scale: 1.2;
   }
 `;
 
@@ -48,21 +64,21 @@ const StyledMonth = styled.h1`
   padding: 1px;
   font-size: 3rem;
   text-align: center;
-  `;
+`;
 
 const StyledContainer = styled.div`
   border: 2px solid black;
   display: flex;
   flex-direction: column;
   width: fit-content;
-  `;
+`;
 const StyledUserContainer = styled.div`
   border: 2px solid green;
   text-align: center;
   width: fit-content;
   flex-direction: column;
   font-size: 1.2rem;
-  `;
+`;
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -94,15 +110,12 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   const [signInStatus, setSignInStatus] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [longLat, setLongLat] = useState([-97.0892, 39.7456]);
+  const [map, setMap] = useState(null);
+  const [mapLayerSwitch, setMapLayerSwitch] = useState(true);
   //Gets month name instead of number
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const month = new Date().getMonth();
-
-  //Just console logs the weather forecast data
-  const logWeatherData = () => {
-    console.log("Forecast", weatherForecast);
-    console.log("Now", weatherNow);
-  };
 
   const toggleTheme = () => {
     theme == "light" ? setTheme("dark") : setTheme("light");
@@ -120,27 +133,30 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
           Switch Theme
         </ThemeButton>
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
-
       </Header>
       <StyledUserContainer>
-       
         <UserProfile userData={userData} signInStatus={signInStatus} />
-
-        <GeoApi setWeatherForecast={setWeatherForecast} setWeatherNow={setWeatherNow} userData={userData} signInStatus={signInStatus} />
       </StyledUserContainer>
       <StyledContainer>
-        <StyledMonth>
-          {monthNames[month]}
-        </StyledMonth>
+        <StyledMonth>{monthNames[month]}</StyledMonth>
         <CurrentWeather weatherNow={weatherNow} />
         <CardContainer>
           <WeeklyForecast weeklyWeather={weatherForecast} />
         </CardContainer>
+        <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} />
       </StyledContainer>
       <Footer>
-        <Button type="submit" onClick={logWeatherData}>
-          Log Data
-        </Button>
+        <GeoApi
+          setWeatherForecast={setWeatherForecast}
+          setWeatherNow={setWeatherNow}
+          userData={userData}
+          signInStatus={signInStatus}
+          longLat={longLat}
+          setLongLat={setLongLat}
+          map={map}
+          mapLayerSwitch={mapLayerSwitch}
+          setMapLayerSwitch={setMapLayerSwitch}
+        />
       </Footer>
     </div>
   );

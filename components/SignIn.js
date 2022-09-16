@@ -25,7 +25,7 @@ function SignIn(props) {
       .auth()
       .signOut()
       .then((res) => {
-        console.log("Signed Out");
+        return;
       })
       .catch((err) => {
         console.log(err);
