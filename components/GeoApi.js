@@ -50,7 +50,7 @@ function GeoApi(props) {
       console.log("Geolocation API key not set.");
     }
 
-    const firstRes = await fetch(`http://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
+    const firstRes = await fetch(`https://api.positionstack.com/v1/forward?access_key=${API_KEY}&query=${searchTerm}`);
     const firstData = await firstRes.json();
     let long = 0;
     let lat = 0;
