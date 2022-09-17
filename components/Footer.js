@@ -1,19 +1,25 @@
 import styled from "styled-components";
 
-const StyledDiv = styled.div`
+const StyledSpan = styled.span`
 background-color:  #034c8c;
-display: flexbox;
-/* display: block; */
+display: flex;
+
 text-align: center;
-position: fixed;
+position: absolute;
 bottom: 0px;
+width: 100vw;
+@media screen {
+    position: fixed;
+    bottom: 0px;
+    width: 100vw;
+}
 `;
 
 const Footer = ({children}) => {
     return(
-    <StyledDiv>
+    <StyledSpan>
         {children}
-    </StyledDiv>
+    </StyledSpan>
     )
 };
 

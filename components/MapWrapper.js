@@ -12,16 +12,17 @@ import { Icon, Style, Circle, Fill, Stroke } from "ol/style";
 import { Point } from "ol/geom";
 import TileJSON from "ol/source/TileJSON";
 
-const MapContainer = styled.div`
-  width: 80%;
+const StyledMapContainer = styled.div`
+  width: 80vw;
   height: 600px;
-  margin: auto;
+  margin-left: auto;
+  margin-right:auto;
 `;
 
 function MapWrapper(props) {
   // set intial state
-  const { longLat, map, setMap, mapLayerSwitch, setMapLayerSwitch } = props;
-  const [mapDisplay, setMapDisplay] = useState(false);
+  const { longLat, map, setMap, mapLayerSwitch, setMapLayerSwitch, mapDisplay, setMapDisplay} = props;
+  
 
   const mapContainer = useRef();
   const mapRef = useRef();
@@ -81,18 +82,18 @@ function MapWrapper(props) {
     }
   }, [longLat]);
 
-  const loadMap = () => {
-    if (mapDisplay) {
-      setMapDisplay(false);
-    } else {
-      setMapDisplay(true);
-    }
-  };
+  // const loadMap = () => {
+  //   if (mapDisplay) {
+  //     setMapDisplay(false);
+  //   } else {
+  //     setMapDisplay(true);
+  //   }
+  // };
 
   return (
     <div>
-      <button onClick={loadMap}>Map</button>
-      {mapDisplay && <MapContainer ref={mapContainer}></MapContainer>}
+      
+      {mapDisplay && <StyledMapContainer ref={mapContainer}></StyledMapContainer>}
     </div>
   );
 }

@@ -9,15 +9,15 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
-import { toggleTheme } from "./_app";
+// import { toggleTheme } from "./_app";
 import MapWrapper from "../components/MapWrapper";
 
-const Button = styled.button`
+export const Button = styled.button`
   background-color: #f2df3a;
   border: 3px solid #000;
   border-radius: 10px;
   color: #000;
-  font-size: 25px;
+  font-size: 1rem;
   margin: 5px;
 
   :hover {
@@ -26,23 +26,6 @@ const Button = styled.button`
     border: 3px solid #eaeaea;
     cursor: pointer;
   }
-`;
-
-const FooterWrapper = styled(Footer)`
-  box-sizing: border-box;
-  border: 5px solid;
-  position: fixed;
-  bottom: 5px;
-  border-color: black;
-  background-color: blue;
-  max-width: fit-content;
-`;
-
-const CurrentWeatherWrapper = styled.div`
-  //position: relative;
-  // top: 3px;
-  // left: 35rem;
-  width: fit-content;
 `;
 
 const ThemeButton = styled.button`
@@ -71,7 +54,11 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  
 `;
+
 const StyledUserContainer = styled.div`
   border: 2px solid green;
   text-align: center;
@@ -79,6 +66,15 @@ const StyledUserContainer = styled.div`
   flex-direction: column;
   font-size: 1.2rem;
 `;
+
+const StyledMapContainer = styled.div`
+  border: 2px solid red;
+  /* display: flex; */
+  position: relative;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  `;
 
 async function getPointData(longitude, latitude) {
   const res = await fetch(`https://api.weather.gov/points/${longitude},${latitude}`);
@@ -105,7 +101,7 @@ export async function getServerSideProps() {
 }
 
 //data props for current weather and weekly weather
-const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, theme }) => {
+const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, theme, loadMap }) => {
   const [weatherForecast, setWeatherForecast] = useState(weatherInitialFetchWeekly);
   const [weatherNow, setWeatherNow] = useState(weatherInitialFetchNow);
   const [signInStatus, setSignInStatus] = useState(false);
@@ -120,6 +116,11 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
   const toggleTheme = () => {
     theme == "light" ? setTheme("dark") : setTheme("light");
   };
+  const [mapDisplay, setMapDisplay] = useState(false);
+
+  const toggleMap = () => {
+    setMapDisplay(!mapDisplay)
+  };
 
   return (
     <div>
@@ -133,6 +134,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
           Switch Theme
         </ThemeButton>
         <SignIn signInStatus={signInStatus} setSignInStatus={setSignInStatus} setUserData={setUserData} />
+        <Button onClick={toggleMap}>Map</Button>
       </Header>
       <StyledUserContainer>
         <UserProfile userData={userData} signInStatus={signInStatus} />
@@ -143,8 +145,11 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
         <CardContainer>
           <WeeklyForecast weeklyWeather={weatherForecast} />
         </CardContainer>
-        <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} />
       </StyledContainer>
+      <StyledMapContainer>
+      
+      <MapWrapper longLat={longLat} map={map} setMap={setMap} mapLayerSwitch={mapLayerSwitch} setMapLayerSwitch={setMapLayerSwitch} mapDisplay={mapDisplay} setMapDisplay={setMapDisplay} />
+      </StyledMapContainer>
       <Footer>
         <GeoApi
           setWeatherForecast={setWeatherForecast}
