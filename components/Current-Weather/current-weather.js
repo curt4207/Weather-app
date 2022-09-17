@@ -7,12 +7,12 @@ import Image from "next/image";
 import { Box } from "@mui/system";
 
 const StyledCard = styled(Card)`
-  margin: 1px;
-  padding: 1px;
+  margin: 10px;
+  padding: 10px;
   text-align: center;
   color: #f8f0f0;
   text-decoration: none;
-  border: 3px solid #0078aa;
+  border: 3px solid #f2a057;
   border-radius: 50px;
   transition: color 0.15s ease, border-color 0.15s ease;
   background: #034c8c;

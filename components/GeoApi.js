@@ -3,11 +3,20 @@ import styled from "styled-components";
 import fire from "../config/fire-conf";
 import "firebase/firestore";
 import "firebase/auth";
+import { Button } from "../pages";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { Feature } from "ol";
 import { Point } from "ol/geom";
 import { fromLonLat } from "ol/proj";
+import { StyledButton } from "./SignIn";
+const StyledSpan = styled.span`
+  margin-left: 0.5rem;
+  `;
+
+const StyledDiv = styled.div`
+  color: #f2a057;
+  `;
 
 function GeoApi(props) {
   const { setWeatherForecast, setWeatherNow, userData, signInStatus, longLat, setLongLat, map, mapLayerSwitch, setMapLayerSwitch } = props;
@@ -157,24 +166,24 @@ function GeoApi(props) {
   };
 
   return (
-    <div>
+    <StyledDiv>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <input autoComplete="off" type="text" onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
       {locationName}
-      <button onClick={saveLocation}>Save Location</button>
+      <Button onClick={saveLocation}>Save Location</Button>
       
         {signInStatus &&
           locationsGrids.map((item) => {
             return (
-              <li key={item.id}>
-                <button onClick={() => fetchSavedLocation(item.grid.office, item.grid.gridX, item.grid.gridY, item.id)}>{item.id}</button>
+              <StyledSpan key={item.id} >
+                <StyledButton onClick={() => fetchSavedLocation(item.grid.office, item.grid.gridX, item.grid.gridY, item.id)}>{item.id}</StyledButton>
                 <button onClick={() => removeLocation(item.id)}>X</button>
-              </li>
+              </StyledSpan>
             );
           })}
-    </div>
+    </StyledDiv>
   );
 }
 
