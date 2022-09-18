@@ -50,7 +50,7 @@ const StyledMonth = styled.h1`
 `;
 
 const StyledContainer = styled.div`
-  border: 2px solid black;
+  /* border: 2px solid black; */
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -60,7 +60,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledUserContainer = styled.div`
-  border: 2px solid green;
+  /* border: 2px solid green; */
   text-align: center;
   width: fit-content;
   flex-direction: column;
@@ -69,11 +69,13 @@ const StyledUserContainer = styled.div`
 
 const StyledMapContainer = styled.div`
   border: 2px solid red;
-  /* display: flex; */
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  
   `;
 
 async function getPointData(longitude, latitude) {

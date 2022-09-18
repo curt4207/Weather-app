@@ -169,7 +169,7 @@ function GeoApi(props) {
     <StyledDiv>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <input autoComplete="off" type="text" onChange={handleChange} />
-        <button type="submit">Search</button>
+        <StyledButton type="submit">Search</StyledButton>
       </form>
       {locationName}
       <Button onClick={saveLocation}>Save Location</Button>
