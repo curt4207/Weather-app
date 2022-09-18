@@ -5,8 +5,8 @@ background-color:  #034c8c;
 color: #F2A057;
 display: flexbox;
 flex-direction: row;
-/* position: fixed;
-top: 0px; */
+position: relative;
+top: 0px;
 `;
 
 const Header = ({children}) => {

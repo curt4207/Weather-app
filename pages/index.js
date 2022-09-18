@@ -11,6 +11,7 @@ import SignIn from "../components/SignIn";
 import UserProfile from "../components/UserProfile";
 // import { toggleTheme } from "./_app";
 import MapWrapper from "../components/MapWrapper";
+import Particle from "../components/Particle";
 
 export const Button = styled.button`
   background-color: #f2df3a;
@@ -53,6 +54,7 @@ const StyledContainer = styled.div`
   /* border: 2px solid black; */
   display: flex;
   flex-direction: column;
+  position: relative;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -126,6 +128,7 @@ const Home = ({ weatherInitialFetchWeekly, weatherInitialFetchNow, setTheme, the
 
   return (
     <div>
+      <Particle/>
       <Head>
         <title>Weather App</title>
       </Head>
