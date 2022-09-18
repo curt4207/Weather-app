@@ -5,7 +5,7 @@ background-color:  #034c8c;
 display: flex;
 
 text-align: center;
-position: absolute;
+position: relative;
 bottom: 0px;
 width: 100vw;
 @media screen {
