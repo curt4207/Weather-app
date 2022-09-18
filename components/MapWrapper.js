@@ -13,7 +13,7 @@ import { Point } from "ol/geom";
 import TileJSON from "ol/source/TileJSON";
 
 const StyledMapContainer = styled.div`
-  width: 80vw;
+  width: 900px;
   height: 600px;
   margin-left: auto;
   margin-right:auto;
